@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "GanaHeza",
+    "slug": "ganahezaapp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/Ganaheza LOGO.png",
+    "scheme": "ganaheza",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/Ganaheza LOGO.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "edgeToEdgeEnabled": false,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.GanaHeza"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/Ganaheza LOGO.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/Ganaheza LOGO.png",
+          "imageWidth": 250,
+          "resizeMode": "contain",
+          "backgroundColor": "#FFFFFF"
+        }
+      ],
+      "expo-build-properties",
+      "@react-native-community/datetimepicker"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3b7fcc3d-f2fb-48b3-9dd4-9b18d63f9e4c"
+      }
+    },
+    "owner": "chrisumurerwas-team"
+  }
+}
