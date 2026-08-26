@@ -1,88 +1,59 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import {
+  placeOrder,
+  getOrders,
+  updateOrderStatus as updateOrderStatusApi,
+  deleteOrder as deleteOrderApi,
+} from '@/services/api';
 
 const CartContext = createContext(null);
 
-const INITIAL_ORDERS = [
-  {
-    id: 'ORD-7821',
-    customerName: 'Jean Paul Mugisha',
-    customerPhone: '+250 788 123 456',
-    customerEmail: 'mugisha.jp@gmail.com',
-    product: {
-      id: '2',
-      name: 'Avocado Hass',
-      category: 'Fruits',
-      code: '16F002.2026',
-      price: 1200,
-      currency: 'RWF',
-      priceUnit: 'Kg',
-      image: require('@/assets/images/avocado.jpg'),
-      location: 'Western Province, Rwanda',
-    },
-    quantity: 5,
-    unit: 'Tonnes',
-    totalPrice: 6000000,
-    currency: 'RWF',
-    deliveryDate: '28 Aug 2026',
-    orderDate: '25 Aug 2026, 09:15 AM',
-    notes: 'Require export-grade packing for air freight delivery to Kigali Airport.',
-    status: 'Pending',
-  },
-  {
-    id: 'ORD-7820',
-    customerName: 'Marie Claire Uwase',
-    customerPhone: '+250 783 987 654',
-    customerEmail: 'uwase.marie@agrodealers.rw',
-    product: {
-      id: '1',
-      name: 'Habanero',
-      category: 'Vegetables',
-      code: '16F001.2026',
-      price: 1500,
-      currency: 'RWF',
-      priceUnit: 'Kg',
-      image: require('@/assets/images/habanero.jpg'),
-      location: 'Northern Province, Rwanda',
-    },
-    quantity: 250,
-    unit: 'Kg',
-    totalPrice: 375000,
-    currency: 'RWF',
-    deliveryDate: '30 Aug 2026',
-    orderDate: '24 Aug 2026, 02:40 PM',
-    notes: 'Please ensure fresh harvest within 24 hours before pickup in Musanze.',
-    status: 'Confirmed',
-  },
-  {
-    id: 'ORD-7819',
-    customerName: 'Emmanuel Hakizimana',
-    customerPhone: '+250 785 456 789',
-    customerEmail: 'e.hakizimana@hoteldesmilles.rw',
-    product: {
-      id: '5',
-      name: 'Inyanya',
-      category: 'Vegetables',
-      code: '16F005.2026',
-      price: 800,
-      currency: 'RWF',
-      priceUnit: 'Kg',
-      image: require('@/assets/images/tomatoes.jpg'),
-      location: 'Eastern Province, Rwanda',
-    },
-    quantity: 100,
-    unit: 'Kg',
-    totalPrice: 80000,
-    currency: 'RWF',
-    deliveryDate: '26 Aug 2026',
-    orderDate: '23 Aug 2026, 11:05 AM',
-    notes: 'Weekly fresh delivery for restaurant supply.',
-    status: 'Delivered',
-  },
-];
+// ─── Normalize a backend order for the UI ────────────────────────────────────
+// The backend order.product snapshot uses `imageUrl`; screens render `image`.
+function normalizeOrder(o) {
+  const product = o.product
+    ? {
+        ...o.product,
+        image: o.product.imageUrl ? { uri: o.product.imageUrl } : null,
+      }
+    : null;
+  return {
+    id:            String(o.id),
+    customerName:  o.customerName,
+    customerPhone: o.customerPhone,
+    customerEmail: o.customerEmail,
+    product,
+    quantity:      o.quantity !== null && o.quantity !== undefined ? Number(o.quantity) : null,
+    unit:          o.unit,
+    totalPrice:    o.totalPrice !== null && o.totalPrice !== undefined ? Number(o.totalPrice) : null,
+    currency:      o.currency,
+    deliveryDate:  o.deliveryDate,
+    orderDate:     o.orderDate,
+    notes:         o.notes,
+    status:        o.status,
+    createdAt:     o.createdAt,
+  };
+}
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
-  const [orders, setOrders] = useState(INITIAL_ORDERS);
+  const [orders, setOrders] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  // ─── Fetch all orders from the API (admin — requires JWT) ──────────────────
+  const fetchOrders = useCallback(async () => {
+    setOrdersLoading(true);
+    try {
+      const data = await getOrders();
+      setOrders(data.map(normalizeOrder));
+    } catch (err) {
+      // Non-fatal: leave existing orders in place
+      console.warn('fetchOrders failed:', err?.message || err);
+    } finally {
+      setOrdersLoading(false);
+    }
+  }, []);
 
   function addToCart(product, orderDetails) {
     const newItem = {
@@ -95,74 +66,88 @@ export function CartProvider({ children }) {
     return newItem;
   }
 
-  function submitDirectOrder(product, orderDetails) {
-    const now = new Date();
-    const formattedDate = now.toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    }) + `, ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
-
-    const newOrder = {
-      id: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
-      customerName: orderDetails.clientName || 'Valued Customer',
-      customerPhone: orderDetails.clientPhone || '+250 780 000 000',
-      customerEmail: orderDetails.clientEmail || 'customer@example.com',
-      product,
-      quantity: orderDetails.quantity || 1,
-      unit: orderDetails.unit || 'Kg',
-      totalPrice: product.price ? product.price * (orderDetails.quantity || 1) : null,
-      currency: product.currency || 'RWF',
-      deliveryDate: orderDetails.deliveryDate || 'As soon as available',
-      orderDate: formattedDate,
-      notes: orderDetails.notes || 'No additional notes provided.',
-      status: 'Pending',
-    };
-
-    setOrders((prev) => [newOrder, ...prev]);
-    return newOrder;
-  }
-
-  function checkoutCart(customerInfo = {}) {
-    if (cartItems.length === 0) return [];
-    const now = new Date();
-    const formattedDate = now.toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    }) + `, ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
-
-    const newSubmittedOrders = cartItems.map((item, index) => {
-      const details = item.orderDetails || {};
-      return {
-        id: `ORD-${Math.floor(1000 + Math.random() * 9000) + index}`,
-        customerName: details.clientName || customerInfo.name || 'Valued Customer',
-        customerPhone: details.clientPhone || customerInfo.phone || '+250 780 000 000',
-        customerEmail: details.clientEmail || customerInfo.email || '',
-        product: item.product,
-        quantity: item.quantity,
-        unit: details.unit || 'Kg',
-        totalPrice: item.product.price ? item.product.price * item.quantity : null,
-        currency: item.product.currency || 'RWF',
-        deliveryDate: details.deliveryDate || 'As agreed upon',
-        orderDate: formattedDate,
-        notes: details.notes || 'Order placed via cart checkout.',
-        status: 'Pending',
+  async function submitDirectOrder(product, orderDetails) {
+    setSubmitting(true);
+    try {
+      const payload = {
+        customerName:  orderDetails.clientName || 'Valued Customer',
+        customerPhone: orderDetails.clientPhone || null,
+        customerEmail: orderDetails.clientEmail || null,
+        product,
+        quantity:      orderDetails.quantity || 1,
+        unit:          orderDetails.unit || 'Kg',
+        totalPrice:    product.price ? product.price * (orderDetails.quantity || 1) : null,
+        currency:      product.currency || 'RWF',
+        deliveryDate:  orderDetails.deliveryDate || null,
+        notes:         orderDetails.notes || null,
       };
-    });
-
-    setOrders((prev) => [...newSubmittedOrders, ...prev]);
-    setCartItems([]);
-    return newSubmittedOrders;
+      const created = await placeOrder(payload);
+      const normalized = normalizeOrder(created);
+      setOrders((prev) => [normalized, ...prev]);
+      return normalized;
+    } finally {
+      setSubmitting(false);
+    }
   }
 
-  function updateOrderStatus(orderId, newStatus) {
+  async function checkoutCart(customerInfo = {}) {
+    if (cartItems.length === 0) return [];
+
+    setSubmitting(true);
+    try {
+      // Submit each cart item; use allSettled so partial failures are reported.
+      const results = await Promise.allSettled(
+        cartItems.map((item) => {
+          const details = item.orderDetails || {};
+          return placeOrder({
+            customerName:  details.clientName || customerInfo.name || 'Valued Customer',
+            customerPhone: details.clientPhone || customerInfo.phone || null,
+            customerEmail: details.clientEmail || customerInfo.email || null,
+            product:       item.product,
+            quantity:      item.quantity,
+            unit:          details.unit || 'Kg',
+            totalPrice:    item.product.price ? item.product.price * item.quantity : null,
+            currency:      item.product.currency || 'RWF',
+            deliveryDate:  details.deliveryDate || null,
+            notes:         details.notes || 'Order placed via cart checkout.',
+          });
+        })
+      );
+
+      const succeeded = [];
+      const failedIndices = [];
+      let failureCount = 0;
+
+      results.forEach((r, idx) => {
+        if (r.status === 'fulfilled') {
+          succeeded.push(normalizeOrder(r.value));
+        } else {
+          failureCount += 1;
+          failedIndices.push(idx);
+        }
+      });
+
+      if (succeeded.length > 0) {
+        setOrders((prev) => [...succeeded, ...prev]);
+        // Keep only the cart items whose submission failed.
+        setCartItems((prev) => prev.filter((_, idx) => failedIndices.includes(idx)));
+      }
+
+      return { succeeded, failureCount };
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  async function updateOrderStatus(orderId, newStatus) {
+    await updateOrderStatusApi(orderId, newStatus);
     setOrders((prev) =>
       prev.map((ord) => (ord.id === orderId ? { ...ord, status: newStatus } : ord))
     );
   }
 
-  function deleteOrder(orderId) {
+  async function deleteOrder(orderId) {
+    await deleteOrderApi(orderId);
     setOrders((prev) => prev.filter((ord) => ord.id !== orderId));
   }
 
@@ -181,6 +166,9 @@ export function CartProvider({ children }) {
       value={{
         cartItems,
         orders,
+        ordersLoading,
+        submitting,
+        fetchOrders,
         addToCart,
         submitDirectOrder,
         checkoutCart,
@@ -198,6 +186,6 @@ export function CartProvider({ children }) {
 
 export function useCart() {
   const ctx = useContext(CartContext);
-  if (!ctx) throw new Error('useCart must be used inside CartProvider');
+  if (!ctx) throw new Error('useCart must be used inside a CartProvider');
   return ctx;
 }

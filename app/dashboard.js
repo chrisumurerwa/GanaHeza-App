@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Dimensions,
@@ -26,7 +26,7 @@ import { getBlogPosts } from '@/services/api';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const LOGO = require('@/assets/images/Ganaheza LOGO.png');
 
-// ─── Preset Images for Products ───────────────────────────────────────────────
+// ÔöÇÔöÇÔöÇ Preset Images for Products ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 const IMAGE_PRESETS = [
   { key: 'none', label: 'Default Icon', image: null },
   { key: 'avocado', label: 'Avocado', image: require('@/assets/images/avocado.jpg') },
@@ -210,7 +210,7 @@ export default function DashboardScreen() {
     });
 
     Alert.alert(
-      'Product Published! 🌱',
+      'Product Published! ­ƒî▒',
       `"${created.name}" is now live and visible across the GanaHeza marketplace.`
     );
     setActiveTab('Products');
@@ -279,7 +279,7 @@ export default function DashboardScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
-      {/* ── Dashboard Top Bar ─────────────────── */}
+      {/* ÔöÇÔöÇ Dashboard Top Bar ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
       <View style={styles.topBar}>
         <View style={styles.brandRow}>
           <Image source={LOGO} style={styles.logo} resizeMode="contain" />
@@ -294,7 +294,7 @@ export default function DashboardScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* ── Horizontal Navigation Tabs ────────── */}
+      {/* ÔöÇÔöÇ Horizontal Navigation Tabs ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
       <View style={styles.tabsRow}>
         {TABS.map((tab) => (
           <TouchableOpacity
@@ -315,14 +315,14 @@ export default function DashboardScreen() {
         ))}
       </View>
 
-      {/* ── Tab Content ───────────────────────── */}
+      {/* ÔöÇÔöÇ Tab Content ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
       >
 
-        {/* ══ OVERVIEW TAB ════════════════════════ */}
+        {/* ÔòÉÔòÉ OVERVIEW TAB ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */}
         {activeTab === 'Overview' && (
           <View style={styles.tabContent}>
 
@@ -371,7 +371,7 @@ export default function DashboardScreen() {
             <View style={styles.sectionHeaderRow}>
               <Text style={styles.sectionLabel}>Recent Customer Orders</Text>
               <TouchableOpacity onPress={() => setActiveTab('Orders')}>
-                <Text style={styles.addInlineText}>View All ({orders.length}) →</Text>
+                <Text style={styles.addInlineText}>View All ({orders.length}) ÔåÆ</Text>
               </TouchableOpacity>
             </View>
 
@@ -385,7 +385,7 @@ export default function DashboardScreen() {
                 <View style={styles.recentOrderTop}>
                   <View>
                     <Text style={styles.recentOrderCustomer}>{ord.customerName}</Text>
-                    <Text style={styles.recentOrderPhone}>📞 {ord.customerPhone}</Text>
+                    <Text style={styles.recentOrderPhone}>­ƒô× {ord.customerPhone}</Text>
                   </View>
                   <View style={[styles.statusBadgeSmall, getStatusBadgeStyle(ord.status)]}>
                     <Text style={styles.statusBadgeText}>{ord.status}</Text>
@@ -394,9 +394,9 @@ export default function DashboardScreen() {
 
                 <View style={styles.recentOrderDetails}>
                   <Text style={styles.recentOrderProduct}>
-                    🌱 {ord.product?.name} · <Text style={styles.qtyHighlight}>{ord.quantity} {ord.unit}</Text>
+                    ­ƒî▒ {ord.product?.name} ┬À <Text style={styles.qtyHighlight}>{ord.quantity} {ord.unit}</Text>
                   </Text>
-                  <Text style={styles.recentOrderDate}>📅 Ordered: {ord.orderDate}</Text>
+                  <Text style={styles.recentOrderDate}>­ƒôà Ordered: {ord.orderDate}</Text>
                 </View>
               </TouchableOpacity>
             ))}
@@ -422,14 +422,14 @@ export default function DashboardScreen() {
                 </View>
                 <View style={styles.recentInfo}>
                   <Text style={styles.recentName}>{p.name}</Text>
-                  <Text style={styles.recentCode}>{p.code} · {p.category}</Text>
+                  <Text style={styles.recentCode}>{p.code} ┬À {p.category}</Text>
                 </View>
                 <View style={styles.recentRight}>
                   <Text style={[styles.recentPrice, !p.price && styles.noPrice]}>
                     {p.price ? `${p.price.toLocaleString()} RWF` : 'TBD'}
                   </Text>
                   <TouchableOpacity
-                    onPress={() => router.push({ pathname: '/product-details', params: { id: p.id } })}
+                    onPress={() => router.push({ pathname: '/product-details', params: { id: p.id, fromDashboard: '1' } })}
                     style={styles.viewLinkBtn}
                   >
                     <Text style={styles.viewLinkText}>View →</Text>
@@ -440,7 +440,7 @@ export default function DashboardScreen() {
           </View>
         )}
 
-        {/* ══ PRODUCTS TAB ════════════════════════ */}
+        {/* ÔòÉÔòÉ PRODUCTS TAB ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */}
         {activeTab === 'Products' && (
           <View style={styles.tabContent}>
             {/* Header + Add Product Button */}
@@ -517,7 +517,7 @@ export default function DashboardScreen() {
                     <View style={styles.actionButtonsRow}>
                       <TouchableOpacity
                         style={styles.viewBtnSmall}
-                        onPress={() => router.push({ pathname: '/product-details', params: { id: p.id } })}
+                        onPress={() => router.push({ pathname: '/product-details', params: { id: p.id, fromDashboard: '1' } })}
                         activeOpacity={0.8}
                       >
                         <Ionicons name="eye-outline" size={14} color={Colors.primary} />
@@ -537,7 +537,7 @@ export default function DashboardScreen() {
           </View>
         )}
 
-        {/* ══ ORDERS TAB ══════════════════════════ */}
+        {/* ÔòÉÔòÉ ORDERS TAB ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */}
         {activeTab === 'Orders' && (
           <View style={styles.tabContent}>
             <View style={styles.productsTopBar}>
@@ -598,7 +598,7 @@ export default function DashboardScreen() {
                   <View style={styles.orderCardHeader}>
                     <View style={styles.orderCustomerBlock}>
                       <Text style={styles.orderCustomerId}>{ord.id}</Text>
-                      <Text style={styles.orderCustomerName}>👤 {ord.customerName}</Text>
+                      <Text style={styles.orderCustomerName}>­ƒæñ {ord.customerName}</Text>
                     </View>
                     <View style={[styles.statusBadge, getStatusBadgeStyle(ord.status)]}>
                       <Text style={styles.statusBadgeText}>{ord.status}</Text>
@@ -622,7 +622,7 @@ export default function DashboardScreen() {
                         <Text style={styles.orderQuantityText}>
                           Quantity: <Text style={styles.orderQuantityBold}>{ord.quantity} {ord.unit}</Text>
                         </Text>
-                        <Text style={styles.orderContactText}>📞 {ord.customerPhone}</Text>
+                        <Text style={styles.orderContactText}>­ƒô× {ord.customerPhone}</Text>
                       </View>
                     </View>
                   </View>
@@ -644,7 +644,7 @@ export default function DashboardScreen() {
           </View>
         )}
 
-        {/* ══ BLOG TAB ════════════════════════════ */}
+        {/* ÔòÉÔòÉ BLOG TAB ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */}
         {activeTab === 'Blog' && (
           <View style={styles.tabContent}>
             <Text style={styles.sectionLabel}>{posts.length} Articles</Text>
@@ -665,7 +665,7 @@ export default function DashboardScreen() {
                   </View>
                   <Text style={styles.blogTitle} numberOfLines={2}>{post.title}</Text>
                   <Text style={styles.blogSummary} numberOfLines={2}>{post.summary}</Text>
-                  <Text style={styles.readMore}>Read Article →</Text>
+                  <Text style={styles.readMore}>Read Article ÔåÆ</Text>
                 </View>
               </TouchableOpacity>
             ))}
@@ -675,9 +675,9 @@ export default function DashboardScreen() {
         <View style={{ height: 40 }} />
       </ScrollView>
 
-      {/* ══════════════════════════════════════════════════════════════════════ */}
-      {/* ── MODAL: ORDER DETAILS (WHEN ADMIN CLICKS ON ANY ORDER) ──────────── */}
-      {/* ══════════════════════════════════════════════════════════════════════ */}
+      {/* ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */}
+      {/* ÔöÇÔöÇ MODAL: ORDER DETAILS (WHEN ADMIN CLICKS ON ANY ORDER) ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
+      {/* ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */}
       <Modal
         visible={!!selectedOrder}
         animationType="slide"
@@ -689,7 +689,7 @@ export default function DashboardScreen() {
             <View style={styles.modalHeader}>
               <View>
                 <Text style={styles.modalHeaderTitle}>Order Details</Text>
-                <Text style={styles.modalHeaderSub}>{selectedOrder.id} · Placed on {selectedOrder.orderDate}</Text>
+                <Text style={styles.modalHeaderSub}>{selectedOrder.id} ┬À Placed on {selectedOrder.orderDate}</Text>
               </View>
               <TouchableOpacity
                 style={styles.modalCloseBtn}
@@ -755,7 +755,19 @@ export default function DashboardScreen() {
               {/* Product & Quantity Card */}
               <View style={styles.detailCard}>
                 <Text style={styles.detailCardHeader}>Ordered Product & Amount</Text>
-                <View style={styles.detailProductRow}>
+                {/* Tapping the product row opens the full product details screen */}
+                <TouchableOpacity
+                  style={styles.detailProductRow}
+                  activeOpacity={0.8}
+                  onPress={() => {
+                    if (!selectedOrder.product?.id) return;
+                    setSelectedOrder(null);
+                    router.push({
+                      pathname: '/product-details',
+                      params: { id: selectedOrder.product.id, fromDashboard: '1' },
+                    });
+                  }}
+                >
                   <View style={styles.detailImgWrap}>
                     {selectedOrder.product?.image ? (
                       <Image source={selectedOrder.product.image} style={styles.detailImg} resizeMode="cover" />
@@ -770,7 +782,8 @@ export default function DashboardScreen() {
                     <Text style={styles.detailProductCode}>{selectedOrder.product?.code} · {selectedOrder.product?.category}</Text>
                     <Text style={styles.detailProductLocation}>📍 {selectedOrder.product?.location || 'Rwanda'}</Text>
                   </View>
-                </View>
+                  <Ionicons name="chevron-forward" size={18} color={Colors.primary} style={{ marginLeft: 4 }} />
+                </TouchableOpacity>
 
                 {/* Amount ordered in Tons or Kg */}
                 <View style={styles.orderAmountBanner}>
@@ -811,32 +824,118 @@ export default function DashboardScreen() {
                 ) : null}
               </View>
 
-              {/* Status Update Card */}
+              {/* Status Update Card — Professional Stepper */}
               <View style={styles.detailCard}>
-                <Text style={styles.detailCardHeader}>Update Order Status</Text>
-                <View style={styles.statusButtonsRow}>
-                  {['Pending', 'Confirmed', 'Delivered'].map((st) => {
-                    const isSelected = selectedOrder.status === st;
+                <View style={styles.statusHeaderRow}>
+                  <Text style={styles.detailCardHeader}>Order Status</Text>
+                  <View style={[styles.currentStatusPill, getStatusBadgeStyle(selectedOrder.status)]}>
+                    <Text style={styles.currentStatusPillText}>
+                      {selectedOrder.status === 'Pending' ? '⏳' : selectedOrder.status === 'Confirmed' ? '✅' : '🚚'} {selectedOrder.status}
+                    </Text>
+                  </View>
+                </View>
+
+                {/* Status Timeline / Stepper */}
+                <View style={styles.stepperWrap}>
+                  {[
+                    { key: 'Pending',   icon: 'time-outline',             label: 'Pending',   desc: 'Order received' },
+                    { key: 'Confirmed', icon: 'checkmark-circle-outline', label: 'Confirmed', desc: 'Order confirmed' },
+                    { key: 'Delivered', icon: 'cube-outline',             label: 'Delivered', desc: 'Order delivered' },
+                  ].map((step, idx, arr) => {
+                    const currentIndex = arr.findIndex(s => s.key === selectedOrder.status);
+                    const isDone    = idx < currentIndex;
+                    const isCurrent = idx === currentIndex;
+
                     return (
-                      <TouchableOpacity
-                        key={st}
-                        style={[
-                          styles.statusChangeBtn,
-                          isSelected && styles.statusChangeBtnActive,
-                          isSelected && getStatusBadgeStyle(st),
-                        ]}
-                        onPress={() => {
-                          updateOrderStatus(selectedOrder.id, st);
-                          setSelectedOrder((prev) => ({ ...prev, status: st }));
-                        }}
-                      >
-                        <Text style={[styles.statusChangeText, isSelected && { color: Colors.white, fontWeight: '800' }]}>
-                          {st === 'Pending' ? '⏳ Pending' : st === 'Confirmed' ? '✅ Confirmed' : '🚚 Delivered'}
-                        </Text>
-                      </TouchableOpacity>
+                      <View key={step.key} style={styles.stepRow}>
+                        {idx > 0 && (
+                          <View style={[
+                            styles.stepConnector,
+                            (isDone || isCurrent) && { backgroundColor: Colors.primary },
+                          ]} />
+                        )}
+                        <TouchableOpacity
+                          style={[
+                            styles.stepCircle,
+                            isDone    && { backgroundColor: Colors.available },
+                            isCurrent && { backgroundColor: Colors.primary, borderColor: Colors.primary },
+                          ]}
+                          onPress={() => {
+                            const targetStatus = step.key;
+                            if (targetStatus === selectedOrder.status) return;
+                            Alert.alert(
+                              'Update Status',
+                              `Change order status to "${step.label}"?`,
+                              [
+                                { text: 'Cancel', style: 'cancel' },
+                                {
+                                  text: 'Update',
+                                  onPress: async () => {
+                                    setSelectedOrder((prev) => ({ ...prev, status: targetStatus }));
+                                    try {
+                                      await updateOrderStatus(selectedOrder.id, targetStatus);
+                                    } catch (err) {
+                                      Alert.alert('Update Failed', err?.message || 'Could not update order status.');
+                                      setSelectedOrder((prev) => ({ ...prev, status: selectedOrder.status }));
+                                    }
+                                  },
+                                },
+                              ]
+                            );
+                          }}
+                          activeOpacity={0.8}
+                        >
+                          <Ionicons
+                            name={isDone ? 'checkmark' : step.icon}
+                            size={18}
+                            color={isDone || isCurrent ? Colors.white : Colors.textSecondary}
+                          />
+                        </TouchableOpacity>
+                        <View style={styles.stepLabelWrap}>
+                          <Text style={[styles.stepLabel, (isDone || isCurrent) && { color: Colors.textMain, fontWeight: '700' }]}>
+                            {step.label}
+                          </Text>
+                          <Text style={styles.stepDesc}>{step.desc}</Text>
+                        </View>
+                      </View>
                     );
                   })}
                 </View>
+
+                {/* Quick advance button */}
+                {selectedOrder.status !== 'Delivered' && (
+                  <TouchableOpacity
+                    style={styles.advanceStatusBtn}
+                    onPress={() => {
+                      const nextStatus = selectedOrder.status === 'Pending' ? 'Confirmed' : 'Delivered';
+                      Alert.alert(
+                        'Update Status',
+                        `Change order status to "${nextStatus}"?`,
+                        [
+                          { text: 'Cancel', style: 'cancel' },
+                          {
+                            text: 'Update',
+                            onPress: async () => {
+                              setSelectedOrder((prev) => ({ ...prev, status: nextStatus }));
+                              try {
+                                await updateOrderStatus(selectedOrder.id, nextStatus);
+                              } catch (err) {
+                                Alert.alert('Update Failed', err?.message || 'Could not update order status.');
+                                setSelectedOrder((prev) => ({ ...prev, status: selectedOrder.status }));
+                              }
+                            },
+                          },
+                        ]
+                      );
+                    }}
+                    activeOpacity={0.85}
+                  >
+                    <Ionicons name="arrow-forward-circle-outline" size={16} color={Colors.white} />
+                    <Text style={styles.advanceStatusBtnText}>
+                      {selectedOrder.status === 'Pending' ? 'Confirm Order' : 'Mark as Delivered'}
+                    </Text>
+                  </TouchableOpacity>
+                )}
 
                 {/* Delete Order Button */}
                 <TouchableOpacity
@@ -847,9 +946,13 @@ export default function DashboardScreen() {
                       {
                         text: 'Delete',
                         style: 'destructive',
-                        onPress: () => {
-                          deleteOrder(selectedOrder.id);
-                          setSelectedOrder(null);
+                        onPress: async () => {
+                          try {
+                            await deleteOrder(selectedOrder.id);
+                            setSelectedOrder(null);
+                          } catch (err) {
+                            Alert.alert('Delete Failed', err?.message || 'Could not delete the order.');
+                          }
                         },
                       },
                     ]);
@@ -866,9 +969,9 @@ export default function DashboardScreen() {
         )}
       </Modal>
 
-      {/* ══════════════════════════════════════════════════════════════════════ */}
-      {/* ── MODAL: ADD NEW PRODUCT (WITH PHOTO UPLOAD BUTTON) ───────────────── */}
-      {/* ══════════════════════════════════════════════════════════════════════ */}
+      {/* ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */}
+      {/* ÔöÇÔöÇ MODAL: ADD NEW PRODUCT (WITH PHOTO UPLOAD BUTTON) ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
+      {/* ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */}
       <Modal
         visible={isAddModalOpen}
         animationType="slide"
@@ -1213,7 +1316,7 @@ export default function DashboardScreen() {
   );
 }
 
-// ─── Status Badge Colors ───────────────────────────────────────────────────────
+// ÔöÇÔöÇÔöÇ Status Badge Colors ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 function getStatusBadgeStyle(status) {
   switch (status) {
     case 'Confirmed':
@@ -1225,7 +1328,7 @@ function getStatusBadgeStyle(status) {
   }
 }
 
-// ─── Styles ───────────────────────────────────────────────────────────────────
+// ÔöÇÔöÇÔöÇ Styles ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.background },
 
@@ -1542,7 +1645,7 @@ const styles = StyleSheet.create({
   },
   quickCallText: { color: Colors.white, fontWeight: '700', fontSize: 12 },
 
-  detailProductRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  detailProductRow: { flexDirection: 'row', alignItems: 'center', gap: 12, borderRadius: 10, backgroundColor: Colors.heroBg, padding: 10, borderWidth: 1, borderColor: Colors.cardBorder },
   detailImgWrap: { width: 64, height: 64, borderRadius: 12, overflow: 'hidden' },
   detailImg: { width: '100%', height: '100%' },
   detailProductName: { fontSize: 16, fontWeight: '800', color: Colors.textMain },
@@ -1595,6 +1698,86 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   deleteOrderText: { fontSize: 12, fontWeight: '700', color: Colors.unavailable },
+
+  // Order Status Stepper
+  statusHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  currentStatusPill: {
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 20,
+  },
+  currentStatusPillText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: Colors.white,
+  },
+  stepperWrap: {
+    gap: 0,
+    marginBottom: 20,
+  },
+  stepRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    minHeight: 52,
+    position: 'relative',
+  },
+  stepConnector: {
+    position: 'absolute',
+    left: 17,
+    top: -26,
+    width: 2,
+    height: 26,
+    backgroundColor: Colors.cardBorder,
+  },
+  stepCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: Colors.heroBg,
+    borderWidth: 2,
+    borderColor: Colors.cardBorder,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stepLabelWrap: {
+    flex: 1,
+  },
+  stepLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: Colors.textSecondary,
+  },
+  stepDesc: {
+    fontSize: 11,
+    color: Colors.textSecondary,
+    marginTop: 2,
+  },
+  advanceStatusBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: Colors.primary,
+    borderRadius: 12,
+    paddingVertical: 14,
+    marginBottom: 10,
+    elevation: 3,
+    shadowColor: Colors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+  },
+  advanceStatusBtnText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: Colors.white,
+  },
 
   // Add product form
   formGroup: { gap: 6, marginBottom: 14 },

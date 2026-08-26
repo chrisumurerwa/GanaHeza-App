@@ -19,7 +19,7 @@ import Colors from '@/constants/colors';
 import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
 
-const UNITS = ['Kg', 'T', 'Bags', 'Tonnes', 'Boxes'];
+const UNITS = ['Kg', 'T'];
 
 function formatDeliveryDate(date) {
   return new Intl.DateTimeFormat('en-RW', {
@@ -160,25 +160,37 @@ export default function OrderScreen() {
     );
   }
 
-  function handleDirectOrder() {
+  const [submittingOrder, setSubmittingOrder] = useState(false);
+
+  async function handleDirectOrder() {
     if (!form.name.trim() || !form.phone.trim()) {
       Alert.alert('Missing Contact Info', 'Please provide your Full Name and Phone Number so our team can confirm your order.');
       return;
     }
-    const newOrder = submitDirectOrder(product, {
-      quantity,
-      unit: selectedUnit,
-      deliveryDate: form.deliveryDate,
-      notes: form.notes,
-      clientName: form.name,
-      clientPhone: form.phone,
-      clientEmail: form.email,
-    });
-    Alert.alert(
-      '🎉 Order Placed Successfully!',
-      `Order ${newOrder.id} for ${quantity} ${selectedUnit} of ${product.name} has been sent directly to GanaHeza management. We will contact you at ${form.phone}.`,
-      [{ text: 'OK', onPress: () => router.replace('/(tabs)') }]
-    );
+    setSubmittingOrder(true);
+    try {
+      const newOrder = await submitDirectOrder(product, {
+        quantity,
+        unit: selectedUnit,
+        deliveryDate: form.deliveryDate,
+        notes: form.notes,
+        clientName: form.name,
+        clientPhone: form.phone,
+        clientEmail: form.email,
+      });
+      Alert.alert(
+        '🎉 Order Placed Successfully!',
+        `Order ${newOrder.id} for ${quantity} ${selectedUnit} of ${product.name} has been sent directly to GanaHeza management. We will contact you at ${form.phone}.`,
+        [{ text: 'OK', onPress: () => router.replace('/(tabs)') }]
+      );
+    } catch (err) {
+      Alert.alert(
+        'Order Failed',
+        err?.message || 'Something went wrong while submitting your order. Please check your connection and try again.'
+      );
+    } finally {
+      setSubmittingOrder(false);
+    }
   }
 
   if (!product) {
@@ -362,12 +374,13 @@ export default function OrderScreen() {
           {/* ── Action Buttons ─────────────────── */}
           <View style={{ gap: 10 }}>
             <TouchableOpacity
-              style={styles.addToCartBtn}
+              style={[styles.addToCartBtn, submittingOrder && { opacity: 0.6 }]}
               onPress={handleDirectOrder}
+              disabled={submittingOrder}
               activeOpacity={0.85}
             >
-              <Ionicons name="flash-outline" size={22} color={Colors.white} />
-              <Text style={styles.addToCartText}>Place Order Now — {quantity} {selectedUnit}</Text>
+              <Ionicons name={submittingOrder ? 'sync-outline' : 'flash-outline'} size={22} color={Colors.white} />
+              <Text style={styles.addToCartText}>{submittingOrder ? 'Submitting…' : `Place Order Now — ${quantity} ${selectedUnit}`}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity

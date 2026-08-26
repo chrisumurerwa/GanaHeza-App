@@ -16,7 +16,7 @@ import { useCart } from '@/context/CartContext';
 
 export default function CartScreen() {
   const router = useRouter();
-  const { cartItems, removeFromCart, clearCart, checkoutCart, totalItems } = useCart();
+  const { cartItems, removeFromCart, clearCart, checkoutCart, submitting, totalItems } = useCart();
 
   function confirmRemove(itemId, name) {
     Alert.alert(
@@ -29,13 +29,36 @@ export default function CartScreen() {
     );
   }
 
-  function handleCheckout() {
-    checkoutCart();
-    Alert.alert(
-      '📦 Order Submitted Successfully!',
-      'Thank you! Your order request has been received by GanaHeza and recorded in the system. Our team will contact you shortly.',
-      [{ text: 'OK', onPress: () => router.replace('/(tabs)') }]
-    );
+  async function handleCheckout() {
+    try {
+      const result = await checkoutCart();
+      const succeeded = Array.isArray(result) ? result.length : (result?.succeeded?.length || 0);
+      const failed = Array.isArray(result) ? 0 : (result?.failureCount || 0);
+
+      if (succeeded > 0 && failed === 0) {
+        Alert.alert(
+          '📦 Order Submitted Successfully!',
+          'Thank you! Your order request has been received by GanaHeza and recorded in the system. Our team will contact you shortly.',
+          [{ text: 'OK', onPress: () => router.replace('/(tabs)') }]
+        );
+      } else if (succeeded > 0 && failed > 0) {
+        Alert.alert(
+          'Partial Success',
+          `${succeeded} order(s) were submitted, but ${failed} failed. Please retry the remaining items from your cart.`,
+          [{ text: 'OK', onPress: () => router.replace('/(tabs)') }]
+        );
+      } else {
+        Alert.alert(
+          'Order Failed',
+          'We could not submit your order. Please check your connection and try again.'
+        );
+      }
+    } catch (err) {
+      Alert.alert(
+        'Order Failed',
+        err?.message || 'We could not submit your order. Please try again.'
+      );
+    }
   }
 
   return (
@@ -157,12 +180,13 @@ export default function CartScreen() {
           {/* Checkout button */}
           <View style={styles.checkoutWrap}>
             <TouchableOpacity
-              style={styles.checkoutBtn}
+              style={[styles.checkoutBtn, submitting && { opacity: 0.6 }]}
               onPress={handleCheckout}
+              disabled={submitting}
               activeOpacity={0.85}
             >
-              <Ionicons name="checkmark-circle-outline" size={22} color={Colors.white} />
-              <Text style={styles.checkoutText}>Submit Order Request</Text>
+              <Ionicons name={submitting ? 'sync-outline' : 'checkmark-circle-outline'} size={22} color={Colors.white} />
+              <Text style={styles.checkoutText}>{submitting ? 'Submitting…' : 'Submit Order Request'}</Text>
             </TouchableOpacity>
           </View>
         </>

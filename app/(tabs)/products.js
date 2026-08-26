@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Dimensions,
   FlatList,
@@ -136,7 +136,7 @@ function GridCard({ item, onPress, onOrder }) {
 // ─── Main Screen ─────────────────────────────────────────────────────────────
 export default function ProductsScreen() {
   const router = useRouter();
-  const { products } = useProducts();
+  const { products, loading, error, fetchProducts } = useProducts();
   const [query, setQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
   const [isGrid, setIsGrid] = useState(false);
@@ -233,10 +233,26 @@ export default function ProductsScreen() {
         contentContainerStyle={isGrid ? styles.gridContent : styles.listPad}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
-          <View style={styles.empty}>
-            <Ionicons name="search-outline" size={48} color={Colors.cardBorder} />
-            <Text style={styles.emptyText}>No products found</Text>
-          </View>
+          loading ? (
+            <View style={styles.empty}>
+              <Ionicons name="sync-outline" size={40} color={Colors.primaryLight} />
+              <Text style={styles.emptyText}>Loading products…</Text>
+            </View>
+          ) : error ? (
+            <View style={styles.empty}>
+              <Ionicons name="cloud-offline-outline" size={44} color={Colors.unavailable} />
+              <Text style={styles.emptyText}>Couldn't load products</Text>
+              <Text style={styles.emptyText}>{error}</Text>
+              <TouchableOpacity style={styles.retryBtn} onPress={fetchProducts} activeOpacity={0.8}>
+                <Text style={styles.retryBtnText}>Retry</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.empty}>
+              <Ionicons name="search-outline" size={48} color={Colors.cardBorder} />
+              <Text style={styles.emptyText}>No products found</Text>
+            </View>
+          )
         }
       />
     </SafeAreaView>
@@ -508,5 +524,18 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 15,
     color: Colors.textSecondary,
+    textAlign: 'center',
+  },
+  retryBtn: {
+    marginTop: 6,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: Colors.primary,
+    borderRadius: 10,
+  },
+  retryBtnText: {
+    color: Colors.white,
+    fontSize: 14,
+    fontWeight: '700',
   },
 });

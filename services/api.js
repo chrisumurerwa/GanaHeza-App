@@ -1,60 +1,23 @@
 /**
  * GanaHeza API Service
  *
- * Connects to the Node.js + PostgreSQL backend.
- *
- * IMPORTANT — set your machine's local IP below.
- * On Android emulator use: http://10.0.2.2:3000
- * On a real phone (same WiFi): http://YOUR_PC_IP:3000
- *   → find it with: ipconfig (Windows) or ifconfig (Mac/Linux)
- *
- * Example: http://192.168.1.45:3000
+ * Thin endpoint wrappers over the network layer.
+ * All HTTP logic (base URL, token, fetch, timeouts, errors) lives in
+ * services/network.js. This file only defines endpoint functions.
  */
 
-// ─── Base URL ─────────────────────────────────────────────────────────────────
-const BASE_URL = 'http://192.168.1.105:3000'; // Your PC's local IP — real device on same WiFi
-// const BASE_URL = 'http://10.0.2.2:3000';   // Use this instead if on Android emulator
+import {
+  apiFetch,
+  setAuthToken,
+  getAuthToken,
+  clearAuthToken,
+  ApiError,
+  API_URL,
+} from './network';
 
-// ─── Stored auth token (set after login) ─────────────────────────────────────
-let _authToken = null;
-
-export function setAuthToken(token) {
-  _authToken = token;
-}
-
-export function getAuthToken() {
-  return _authToken;
-}
-
-export function clearAuthToken() {
-  _authToken = null;
-}
-
-// ─── Internal fetch helper ────────────────────────────────────────────────────
-async function apiFetch(path, options = {}) {
-  const headers = {
-    'Content-Type': 'application/json',
-    ...(options.headers || {}),
-  };
-
-  if (_authToken) {
-    headers['Authorization'] = `Bearer ${_authToken}`;
-  }
-
-  const res = await fetch(`${BASE_URL}${path}`, {
-    ...options,
-    headers,
-  });
-
-  const data = await res.json().catch(() => ({}));
-
-  if (!res.ok) {
-    const message = data.error || data.message || `API error ${res.status}`;
-    throw new Error(message);
-  }
-
-  return data;
-}
+// Re-export token management + error class so existing imports
+// (import { login, setAuthToken } from '@/services/api') keep working.
+export { setAuthToken, getAuthToken, clearAuthToken, ApiError, API_URL };
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 
@@ -103,6 +66,59 @@ export async function getProductById(id) {
   } catch {
     return null;
   }
+}
+
+/**
+ * Upload a product image to the backend.
+ * The file is saved in backend/uploads/products/ and the server
+ * returns the relative path (e.g. /uploads/products/12345-avocado.jpg).
+ * That path is stored in the database as imageUrl.
+ *
+ * @param {string} imageUri  — local file URI from expo-image-picker
+ * @returns {Promise<string>} — server image path (imageUrl)
+ */
+export async function uploadProductImage(imageUri) {
+  const formData = new FormData();
+
+  // Extract filename and infer mime type from the URI
+  const filename = imageUri.split('/').pop() || 'product.jpg';
+  const ext = filename.split('.').pop()?.toLowerCase();
+  const mimeType =
+    ext === 'png' ? 'image/png'
+    : ext === 'webp' ? 'image/webp'
+    : ext === 'gif' ? 'image/gif'
+    : 'image/jpeg'; // default to jpeg
+
+  formData.append('image', {
+    uri: imageUri,
+    name: filename,
+    type: mimeType,
+  });
+
+  const headers = {};
+  const token = getAuthToken();
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  // NOTE: Do NOT set Content-Type — fetch sets it automatically
+  // with the correct multipart boundary for FormData.
+
+  const res = await fetch(`${API_URL}/api/products/upload`, {
+    method: 'POST',
+    body: formData,
+    headers,
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new ApiError(
+      data.error || `Upload failed (${res.status})`,
+      res.status,
+      data
+    );
+  }
+
+  return data.imageUrl; // e.g. '/uploads/products/12345-avocado.jpg'
 }
 
 /**

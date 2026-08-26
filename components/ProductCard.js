@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import StatusBadge from '@/components/StatusBadge';
@@ -31,10 +31,22 @@ export default function ProductCard({ product, onPress }) {
   const quantityText = formatQuantity(product);
   const priceText = formatPrice(product);
 
+  // imageUrl is already a full URL (normalized in ProductContext)
+  const imageUrl = product.imageUrl;
+
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.85}>
       {/* Left color accent bar */}
       <View style={styles.accentBar} />
+
+      {/* Product thumbnail image */}
+      {imageUrl ? (
+        <Image source={{ uri: imageUrl }} style={styles.thumbnail} resizeMode="cover" />
+      ) : (
+        <View style={[styles.thumbnail, styles.thumbnailFallback]}>
+          <Ionicons name="leaf-outline" size={28} color={Colors.primaryLight} />
+        </View>
+      )}
 
       <View style={styles.body}>
         {/* Header row: name + category */}
@@ -65,13 +77,10 @@ export default function ProductCard({ product, onPress }) {
           </Text>
         </View>
 
-        {/* Footer row: status + button */}
+        {/* Footer row: status badge */}
         <View style={styles.footer}>
           <StatusBadge status={product.status} />
-          <TouchableOpacity style={styles.detailsBtn} onPress={onPress} activeOpacity={0.8}>
-            <Text style={styles.detailsBtnText}>View Details</Text>
-            <Ionicons name="chevron-forward" size={13} color={Colors.primary} />
-          </TouchableOpacity>
+          <Ionicons name="chevron-forward" size={18} color={Colors.primary} />
         </View>
       </View>
     </TouchableOpacity>
@@ -97,6 +106,16 @@ const styles = StyleSheet.create({
     width: 4,
     backgroundColor: Colors.primary,
     borderRadius: 4,
+  },
+  thumbnail: {
+    width: 84,
+    height: '100%',
+    minHeight: 84,
+  },
+  thumbnailFallback: {
+    backgroundColor: Colors.tagBg,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   body: {
     flex: 1,
