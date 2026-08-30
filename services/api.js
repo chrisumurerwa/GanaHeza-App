@@ -41,6 +41,38 @@ export async function getMe() {
   return apiFetch('/api/auth/me');
 }
 
+/**
+ * Request a password reset token for a given email.
+ * Returns { message, resetToken? } — the reset token is included
+ * directly in the response (no email service yet).
+ */
+export async function forgotPassword(email) {
+  return apiFetch('/api/auth/forgot-password', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  });
+}
+
+/**
+ * Reset password using a reset token obtained from forgotPassword().
+ */
+export async function resetPassword(resetToken, newPassword) {
+  return apiFetch('/api/auth/reset-password', {
+    method: 'POST',
+    body: JSON.stringify({ resetToken, newPassword }),
+  });
+}
+
+/**
+ * Change password while logged in (requires auth token).
+ */
+export async function changePassword(currentPassword, newPassword) {
+  return apiFetch('/api/auth/change-password', {
+    method: 'POST',
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+}
+
 // ─── Products ─────────────────────────────────────────────────────────────────
 
 /**

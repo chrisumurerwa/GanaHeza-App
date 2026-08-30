@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Dimensions,
@@ -21,7 +21,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import { useCart } from '@/context/CartContext';
 import { useProducts } from '@/context/ProductContext';
-import { getBlogPosts } from '@/services/api';
+import { getBlogPosts, changePassword as apiChangePassword } from '@/services/api';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const LOGO = require('@/assets/images/Ganaheza LOGO.png');
@@ -66,6 +66,13 @@ export default function DashboardScreen() {
 
   // Selected Order for Details Modal
   const [selectedOrder, setSelectedOrder] = useState(null);
+
+  // Change Password Modal State
+  const [showChangePass, setShowChangePass] = useState(false);
+  const [currentPass, setCurrentPass] = useState('');
+  const [newPassDash, setNewPassDash] = useState('');
+  const [confirmPassDash, setConfirmPassDash] = useState('');
+  const [changePassLoading, setChangePassLoading] = useState(false);
   
   // Add Product Modal State
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -156,6 +163,43 @@ export default function DashboardScreen() {
         { text: 'Sign Out', style: 'destructive', onPress: () => router.replace('/(tabs)') },
       ]
     );
+  }
+
+  function openChangePassModal() {
+    setCurrentPass('');
+    setNewPassDash('');
+    setConfirmPassDash('');
+    setShowChangePass(true);
+  }
+
+  function closeChangePassModal() {
+    setShowChangePass(false);
+    setCurrentPass('');
+    setNewPassDash('');
+    setConfirmPassDash('');
+    setChangePassLoading(false);
+  }
+
+  async function handleChangePassword() {
+    if (newPassDash.length < 6) {
+      Alert.alert('Password Too Short', 'New password must be at least 6 characters long.');
+      return;
+    }
+    if (newPassDash !== confirmPassDash) {
+      Alert.alert('Passwords Do Not Match', 'The new passwords you entered do not match.');
+      return;
+    }
+
+    setChangePassLoading(true);
+    try {
+      await apiChangePassword(currentPass, newPassDash);
+      Alert.alert('Password Changed!', 'Your password has been changed successfully.');
+      closeChangePassModal();
+    } catch (err) {
+      Alert.alert('Error', err?.message || 'Something went wrong. Please try again.');
+    } finally {
+      setChangePassLoading(false);
+    }
   }
 
   function handleAddProductSubmit() {
@@ -288,10 +332,16 @@ export default function DashboardScreen() {
             <Text style={styles.adminSub}>GanaHeza Management</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.signOutBtn} onPress={confirmSignOut} activeOpacity={0.8}>
+        <View style={styles.topBarActions}>
+          <TouchableOpacity style={styles.changePassBtn} onPress={openChangePassModal} activeOpacity={0.8}>
+            <Ionicons name="key-outline" size={18} color={Colors.primary} />
+            <Text style={styles.changePassBtnText}>Password</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.signOutBtn} onPress={confirmSignOut} activeOpacity={0.8}>
           <Ionicons name="log-out-outline" size={18} color={Colors.unavailable} />
           <Text style={styles.signOutText}>Exit</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* ÔöÇÔöÇ Horizontal Navigation Tabs ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
@@ -371,7 +421,7 @@ export default function DashboardScreen() {
             <View style={styles.sectionHeaderRow}>
               <Text style={styles.sectionLabel}>Recent Customer Orders</Text>
               <TouchableOpacity onPress={() => setActiveTab('Orders')}>
-                <Text style={styles.addInlineText}>View All ({orders.length}) ÔåÆ</Text>
+                <Text style={styles.addInlineText}>View All ({orders.length})</Text>
               </TouchableOpacity>
             </View>
 
@@ -385,7 +435,7 @@ export default function DashboardScreen() {
                 <View style={styles.recentOrderTop}>
                   <View>
                     <Text style={styles.recentOrderCustomer}>{ord.customerName}</Text>
-                    <Text style={styles.recentOrderPhone}>­ƒô× {ord.customerPhone}</Text>
+                    <Text style={styles.recentOrderPhone}>{ord.customerPhone}</Text>
                   </View>
                   <View style={[styles.statusBadgeSmall, getStatusBadgeStyle(ord.status)]}>
                     <Text style={styles.statusBadgeText}>{ord.status}</Text>
@@ -394,7 +444,7 @@ export default function DashboardScreen() {
 
                 <View style={styles.recentOrderDetails}>
                   <Text style={styles.recentOrderProduct}>
-                    ­ƒî▒ {ord.product?.name} ┬À <Text style={styles.qtyHighlight}>{ord.quantity} {ord.unit}</Text>
+                    ­ƒî▒ {ord.product?.name} · <Text style={styles.qtyHighlight}>{ord.quantity} {ord.unit}</Text>
                   </Text>
                   <Text style={styles.recentOrderDate}>­ƒôà Ordered: {ord.orderDate}</Text>
                 </View>
@@ -665,7 +715,7 @@ export default function DashboardScreen() {
                   </View>
                   <Text style={styles.blogTitle} numberOfLines={2}>{post.title}</Text>
                   <Text style={styles.blogSummary} numberOfLines={2}>{post.summary}</Text>
-                  <Text style={styles.readMore}>Read Article ÔåÆ</Text>
+                  <Text style={styles.readMore}>Read Article</Text>
                 </View>
               </TouchableOpacity>
             ))}
@@ -1312,6 +1362,85 @@ export default function DashboardScreen() {
           </KeyboardAvoidingView>
         </SafeAreaView>
       </Modal>
+
+      {/* Change Password Modal */}
+      <Modal
+        visible={showChangePass}
+        transparent
+        animationType="fade"
+        onRequestClose={closeChangePassModal}
+      >
+        <View style={styles.cpOverlay}>
+          <View style={styles.cpCard}>
+            <View style={styles.cpHeader}>
+              <Text style={styles.cpTitle}>Change Password</Text>
+              <TouchableOpacity onPress={closeChangePassModal} activeOpacity={0.7}>
+                <Ionicons name="close" size={24} color={Colors.textSecondary} />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.cpDesc}>Update your account password</Text>
+
+            {/* Current Password */}
+            <Text style={styles.cpLabel}>Current Password</Text>
+            <View style={styles.cpInputWrap}>
+              <Ionicons name="lock-closed-outline" size={18} color={Colors.textSecondary} />
+              <TextInput
+                style={styles.cpInput}
+                value={currentPass}
+                onChangeText={setCurrentPass}
+                placeholder="Enter current password"
+                placeholderTextColor={Colors.textSecondary}
+                secureTextEntry
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </View>
+
+            {/* New Password */}
+            <Text style={styles.cpLabel}>New Password</Text>
+            <View style={styles.cpInputWrap}>
+              <Ionicons name="lock-closed-outline" size={18} color={Colors.textSecondary} />
+              <TextInput
+                style={styles.cpInput}
+                value={newPassDash}
+                onChangeText={setNewPassDash}
+                placeholder="Enter new password"
+                placeholderTextColor={Colors.textSecondary}
+                secureTextEntry
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </View>
+
+            {/* Confirm New Password */}
+            <Text style={styles.cpLabel}>Confirm New Password</Text>
+            <View style={styles.cpInputWrap}>
+              <Ionicons name="lock-closed-outline" size={18} color={Colors.textSecondary} />
+              <TextInput
+                style={styles.cpInput}
+                value={confirmPassDash}
+                onChangeText={setConfirmPassDash}
+                placeholder="Re-enter new password"
+                placeholderTextColor={Colors.textSecondary}
+                secureTextEntry
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </View>
+
+            <TouchableOpacity
+              style={[styles.cpBtn, changePassLoading && { opacity: 0.7 }]}
+              onPress={handleChangePassword}
+              disabled={changePassLoading}
+              activeOpacity={0.85}
+            >
+              <Text style={styles.cpBtnText}>
+                {changePassLoading ? 'Changing...' : 'Change Password'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -1356,6 +1485,62 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEE2E2',
   },
   signOutText: { fontSize: 12, fontWeight: '700', color: Colors.unavailable },
+  topBarActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  changePassBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    backgroundColor: '#E8F5E9',
+  },
+  changePassBtnText: { fontSize: 12, fontWeight: '700', color: Colors.primary },
+  cpOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  cpCard: {
+    backgroundColor: Colors.white,
+    borderRadius: 16,
+    padding: 24,
+    width: '100%',
+    maxWidth: 400,
+  },
+  cpHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  cpTitle: { fontSize: 20, fontWeight: '700', color: Colors.textMain },
+  cpDesc: { fontSize: 13, color: Colors.textSecondary, marginBottom: 16 },
+  cpLabel: { fontSize: 13, fontWeight: '600', color: Colors.textMain, marginBottom: 6, marginTop: 12 },
+  cpInputWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+  },
+  cpInput: { flex: 1, fontSize: 14, color: Colors.textMain, paddingVertical: 0, marginLeft: 8 },
+  cpBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: Colors.primary,
+    borderRadius: 12,
+    paddingVertical: 14,
+    marginTop: 20,
+  },
+  cpBtnText: { color: Colors.white, fontSize: 15, fontWeight: '700' },
 
   tabsRow: {
     flexDirection: 'row',

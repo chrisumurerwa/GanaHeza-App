@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import { useProducts } from '@/context/ProductContext';
 import { getBlogPosts } from '@/services/api';
+import { useLanguage } from '@/context/LanguageContext';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CARD_WIDTH = SCREEN_WIDTH * 0.44;
@@ -45,7 +46,7 @@ function CategoryChip({ item, isActive, onPress }) {
 }
 
 // ─── Featured Product Card (horizontal scroll) ────────────────────────────────
-function FeaturedCard({ product, onPress, onOrder }) {
+function FeaturedCard({ product, onPress, onOrder, t }) {
   return (
     <TouchableOpacity
       style={[styles.featuredCard, { width: FEATURED_WIDTH }]}
@@ -74,16 +75,16 @@ function FeaturedCard({ product, onPress, onOrder }) {
       <View style={styles.featuredBody}>
         <Text style={styles.featuredName}>{product.name}</Text>
         <Text style={styles.featuredQty}>
-          {product.quantity ? `${product.quantity} ${product.unit}/wk` : 'Ask for qty'}
+          {product.quantity ? `${product.quantity} ${product.unit}/wk` : t('home_ask_qty')}
         </Text>
         <View style={styles.featuredFooter}>
           <View style={styles.availBadge}>
             <View style={styles.dot} />
-            <Text style={styles.availText}>Available</Text>
+            <Text style={styles.availText}>{t('common_available')}</Text>
           </View>
           <TouchableOpacity style={styles.orderChip} onPress={onOrder} activeOpacity={0.85}>
             <Ionicons name="cart-outline" size={12} color={Colors.white} />
-            <Text style={styles.orderChipText}>Order</Text>
+            <Text style={styles.orderChipText}>{t('common_order')}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -92,7 +93,7 @@ function FeaturedCard({ product, onPress, onOrder }) {
 }
 
 // ─── Grid Product Card ────────────────────────────────────────────────────────
-function GridCard({ product, onPress, onOrder }) {
+function GridCard({ product, onPress, onOrder, t }) {
   return (
     <TouchableOpacity
       style={[styles.gridCard, { width: CARD_WIDTH }]}
@@ -116,11 +117,11 @@ function GridCard({ product, onPress, onOrder }) {
         <Text style={[styles.gridPrice, !product.price && styles.noPrice]}>
           {product.price
             ? `${product.price.toLocaleString()} ${product.currency}/${product.priceUnit}`
-            : 'Price TBD'}
+            : t('common_price_tbd')}
         </Text>
         <TouchableOpacity style={styles.gridOrderBtn} onPress={onOrder} activeOpacity={0.85}>
           <Ionicons name="cart-outline" size={13} color={Colors.white} />
-          <Text style={styles.gridOrderText}>Order Now</Text>
+          <Text style={styles.gridOrderText}>{t('common_order_now')}</Text>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -128,10 +129,10 @@ function GridCard({ product, onPress, onOrder }) {
 }
 
 // ─── Home List Product Card (Full Width) ──────────────────────────────────────
-function HomeListCard({ product, onPress, onOrder }) {
+function HomeListCard({ product, onPress, onOrder, t }) {
   const priceText = product.price
     ? `${product.price.toLocaleString()} ${product.currency}/${product.priceUnit}`
-    : 'Price on request';
+    : t('common_price_on_request');
 
   return (
     <TouchableOpacity style={styles.homeListCard} onPress={onPress} activeOpacity={0.88}>
@@ -156,7 +157,7 @@ function HomeListCard({ product, onPress, onOrder }) {
           <Text style={[styles.homeListPrice, !product.price && styles.noPrice]}>{priceText}</Text>
           <TouchableOpacity style={styles.homeListOrderBtn} onPress={onOrder} activeOpacity={0.85}>
             <Ionicons name="cart-outline" size={12} color={Colors.white} />
-            <Text style={styles.homeListOrderText}>Order</Text>
+            <Text style={styles.homeListOrderText}>{t('common_order')}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -165,7 +166,7 @@ function HomeListCard({ product, onPress, onOrder }) {
 }
 
 // ─── Section Header ───────────────────────────────────────────────────────────
-function SectionHead({ title, onViewAll, showToggle, isGrid, onToggleGrid }) {
+function SectionHead({ title, onViewAll, viewAllLabel, showToggle, isGrid, onToggleGrid }) {
   return (
     <View style={styles.sectionHeader}>
       <View style={styles.sectionTitleRow}>
@@ -193,7 +194,7 @@ function SectionHead({ title, onViewAll, showToggle, isGrid, onToggleGrid }) {
         )}
         {onViewAll && (
           <TouchableOpacity onPress={onViewAll}>
-            <Text style={styles.viewAll}>View All →</Text>
+            <Text style={styles.viewAll}>{viewAllLabel || 'View All'}</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -205,6 +206,7 @@ function SectionHead({ title, onViewAll, showToggle, isGrid, onToggleGrid }) {
 export default function HomeScreen() {
   const router = useRouter();
   const { products } = useProducts();
+  const { t } = useLanguage();
   const [posts, setPosts]                 = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
   const [isMarketGrid, setIsMarketGrid]   = useState(true);
@@ -245,19 +247,17 @@ export default function HomeScreen() {
           <View style={styles.heroContent}>
             <View style={styles.heroBadge}>
               <Ionicons name="leaf" size={11} color={Colors.white} />
-              <Text style={styles.heroBadgeText}>Rwanda Agriculture</Text>
+              <Text style={styles.heroBadgeText}>{t('home_badge')}</Text>
             </View>
-            <Text style={styles.heroTitle}>Connecting Farmers{'\n'}to Better Markets</Text>
-            <Text style={styles.heroSub}>
-              Find products, current prices and available quantities in one place.
-            </Text>
+            <Text style={styles.heroTitle}>{t('home_hero_title')}</Text>
+            <Text style={styles.heroSub}>{t('home_hero_subtitle')}</Text>
             <View style={styles.heroButtons}>
               <TouchableOpacity
                 style={styles.heroBtn}
                 onPress={() => router.push('/(tabs)/products')}
                 activeOpacity={0.85}
               >
-                <Text style={styles.heroBtnText}>Explore Products →</Text>
+                <Text style={styles.heroBtnText}>{t('home_explore')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.heroSecondaryBtn}
@@ -265,7 +265,7 @@ export default function HomeScreen() {
                 activeOpacity={0.85}
               >
                 <Ionicons name="call-outline" size={15} color={Colors.white} />
-                <Text style={styles.heroSecondaryText}>Contact Us</Text>
+                <Text style={styles.heroSecondaryText}>{t('home_contact_us')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -273,9 +273,9 @@ export default function HomeScreen() {
           {/* Decorative stats row inside hero */}
           <View style={styles.heroStats}>
             {[
-              { value: '15+', label: 'Products' },
-              { value: '6',   label: 'Categories' },
-              { value: '100%', label: 'Rwandan' },
+              { value: '15+', label: t('home_stat_products') },
+              { value: '6',   label: t('home_stat_categories') },
+              { value: '100%', label: t('home_stat_rwandan') },
             ].map((s, i) => (
               <View key={s.label} style={[styles.heroStat, i < 2 && styles.heroStatBorder]}>
                 <Text style={styles.heroStatNum}>{s.value}</Text>
@@ -287,7 +287,7 @@ export default function HomeScreen() {
 
         {/* ── Category Filter ───────────────────────── */}
         <View style={styles.catSection}>
-          <SectionHead title="Browse by Category" />
+          <SectionHead title={t('home_browse_cat')} />
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -310,8 +310,9 @@ export default function HomeScreen() {
         {featured.length > 0 && (
         <View style={styles.section}>
           <SectionHead
-            title={activeCategory === 'All' ? 'Featured Products' : `${activeCategory} — Featured`}
+            title={activeCategory === 'All' ? t('home_featured') : `${activeCategory} — ${t('home_featured')}`}
             onViewAll={() => router.push('/(tabs)/products')}
+            viewAllLabel={t('home_view_all')}
           />
           <ScrollView
             horizontal
@@ -326,6 +327,7 @@ export default function HomeScreen() {
                 product={p}
                 onPress={() => goToDetail(p.id)}
                 onOrder={() => goToOrder(p.id)}
+                t={t}
               />
             ))}
           </ScrollView>
@@ -337,10 +339,11 @@ export default function HomeScreen() {
           <SectionHead
             title={
               activeCategory === 'All'
-                ? "Today's Market"
-                : `All ${activeCategory} (${topPicks.length})`
+                ? t('home_todays_market')
+                : `${t('cat_all')} ${activeCategory} (${topPicks.length})`
             }
             onViewAll={() => router.push('/(tabs)/products')}
+            viewAllLabel={t('home_view_all')}
             showToggle={true}
             isGrid={isMarketGrid}
             onToggleGrid={setIsMarketGrid}
@@ -348,13 +351,13 @@ export default function HomeScreen() {
           {topPicks.length === 0 ? (
             <View style={styles.emptyCategory}>
               <Ionicons name="search-outline" size={36} color={Colors.cardBorder} />
-              <Text style={styles.emptyCategoryText}>No products in this category</Text>
+              <Text style={styles.emptyCategoryText}>{t('home_no_products_cat')}</Text>
               <TouchableOpacity
                 style={styles.emptyCategoryBtn}
                 onPress={() => setActiveCategory('All')}
                 activeOpacity={0.8}
               >
-                <Text style={styles.emptyCategoryBtnText}>Show All Products</Text>
+                <Text style={styles.emptyCategoryBtnText}>{t('home_show_all')}</Text>
               </TouchableOpacity>
             </View>
           ) : isMarketGrid ? (
@@ -365,6 +368,7 @@ export default function HomeScreen() {
                   product={p}
                   onPress={() => goToDetail(p.id)}
                   onOrder={() => goToOrder(p.id)}
+                  t={t}
                 />
               ))}
             </View>
@@ -376,6 +380,7 @@ export default function HomeScreen() {
                   product={p}
                   onPress={() => goToDetail(p.id)}
                   onOrder={() => goToOrder(p.id)}
+                  t={t}
                 />
               ))}
             </View>
@@ -388,7 +393,7 @@ export default function HomeScreen() {
               activeOpacity={0.8}
             >
               <Ionicons name="leaf-outline" size={14} color={Colors.primary} />
-              <Text style={styles.showAllText}>See all products in Products tab</Text>
+              <Text style={styles.showAllText}>{t('home_see_all_tab')}</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -396,13 +401,13 @@ export default function HomeScreen() {
         {/* ── Why GanaHeza — only show on All ──────── */}
         {activeCategory === 'All' && (
         <View style={styles.section}>
-          <SectionHead title="Why GanaHeza?" />
+          <SectionHead title={t('home_why_ganaheza')} />
           <View style={styles.whyRow}>
             {[
-              { icon: 'shield-checkmark-outline', color: Colors.primary,    title: 'Verified Products',  desc: 'All products sourced from verified Rwandan farmers.' },
-              { icon: 'pricetag-outline',          color: '#F59E0B',         title: 'Fair Prices',         desc: 'Transparent market prices updated regularly.' },
-              { icon: 'flash-outline',             color: '#8B5CF6',         title: 'Fast Orders',         desc: 'Place orders directly and get quick responses.' },
-              { icon: 'globe-outline',             color: '#10B981',         title: 'Export Ready',        desc: 'Products meet international quality standards.' },
+              { icon: 'shield-checkmark-outline', color: Colors.primary, title: t('home_why_verified'), desc: t('home_why_verified_sub') },
+              { icon: 'pricetag-outline',          color: '#F59E0B',      title: t('home_why_prices'),   desc: t('home_why_prices_sub') },
+              { icon: 'flash-outline',             color: '#8B5CF6',      title: t('home_why_fast'),     desc: t('home_why_fast_sub') },
+              { icon: 'globe-outline',             color: '#10B981',      title: t('home_why_export'),   desc: t('home_why_export_sub') },
             ].map((w) => (
               <View key={w.title} style={styles.whyCard}>
                 <View style={[styles.whyIconWrap, { backgroundColor: w.color + '18' }]}>
@@ -419,8 +424,9 @@ export default function HomeScreen() {
         {/* ── Latest Articles ──────────────────────── */}
         <View style={styles.section}>
           <SectionHead
-            title="Latest Articles"
+            title={t('home_latest_articles')}
             onViewAll={() => router.push('/(tabs)/blog')}
+            viewAllLabel={t('home_view_all')}
           />
           {posts.map((post) => (
             <TouchableOpacity
@@ -442,7 +448,7 @@ export default function HomeScreen() {
                   <Text style={styles.blogDate}>{post.date}</Text>
                 </View>
                 <Text style={styles.blogTitle} numberOfLines={2}>{post.title}</Text>
-                <Text style={styles.readMore}>Read More →</Text>
+                <Text style={styles.readMore}>{t('common_read_more')}</Text>
               </View>
             </TouchableOpacity>
           ))}
@@ -459,8 +465,8 @@ export default function HomeScreen() {
               <Ionicons name="chatbubbles-outline" size={24} color={Colors.white} />
             </View>
             <View>
-              <Text style={styles.ctaTitle}>Need help?</Text>
-              <Text style={styles.ctaSub}>Our team is ready to assist you</Text>
+              <Text style={styles.ctaTitle}>{t('home_cta_need_help')}</Text>
+              <Text style={styles.ctaSub}>{t('home_cta_subtitle')}</Text>
             </View>
           </View>
           <View style={styles.ctaArrowWrap}>

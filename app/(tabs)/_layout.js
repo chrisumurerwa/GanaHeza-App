@@ -10,6 +10,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Colors from '@/constants/colors';
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 const LOGO = require('@/assets/images/Ganaheza LOGO.png');
 
@@ -18,6 +19,7 @@ function TopHeader() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { totalItems } = useCart();
+  const { language, toggleLanguage } = useLanguage();
 
   return (
     <View style={[styles.header, { paddingTop: insets.top }]}>
@@ -31,13 +33,24 @@ function TopHeader() {
           activeOpacity={0.8}
           style={styles.logoTouchable}
           accessibilityLabel="GanaHeza home"
-          accessibilityHint="Returns to the home page"
         >
           <Image source={LOGO} style={styles.logo} resizeMode="contain" />
         </TouchableOpacity>
 
         {/* Right: action icons */}
         <View style={styles.headerActions}>
+
+          {/* Language toggle */}
+          <TouchableOpacity
+            style={styles.langBtn}
+            onPress={toggleLanguage}
+            activeOpacity={0.8}
+            accessibilityLabel="Switch language"
+          >
+            <Text style={styles.langBtnText}>
+              {language === 'en' ? 'RW' : 'EN'}
+            </Text>
+          </TouchableOpacity>
 
           {/* Cart icon */}
           <TouchableOpacity
@@ -74,12 +87,13 @@ function TopHeader() {
 function BottomTabBar({ state, navigation }) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const { t } = useLanguage();
 
   const TABS = [
-    { name: 'index',    label: 'Home',     icon: 'home',               iconOut: 'home-outline' },
-    { name: 'products', label: 'Products', icon: 'leaf',               iconOut: 'leaf-outline' },
-    { name: 'blog',     label: 'Blog',     icon: 'newspaper',          iconOut: 'newspaper-outline' },
-    { name: 'about',    label: 'About',    icon: 'information-circle', iconOut: 'information-circle-outline' },
+    { name: 'index',    label: t('tab_home'),     icon: 'home',               iconOut: 'home-outline' },
+    { name: 'products', label: t('tab_products'), icon: 'leaf',               iconOut: 'leaf-outline' },
+    { name: 'blog',     label: t('tab_blog'),     icon: 'newspaper',          iconOut: 'newspaper-outline' },
+    { name: 'about',    label: t('tab_about'),    icon: 'information-circle', iconOut: 'information-circle-outline' },
   ];
 
   // Show back button only when not on the first tab (Home)
@@ -95,7 +109,7 @@ function BottomTabBar({ state, navigation }) {
           activeOpacity={0.75}
         >
           <Ionicons name="chevron-back" size={20} color={Colors.textSecondary} />
-          <Text style={styles.backTabLabel}>Back</Text>
+          <Text style={styles.backTabLabel}>{t('tab_back')}</Text>
         </TouchableOpacity>
       )}
 
@@ -144,7 +158,7 @@ function BottomTabBar({ state, navigation }) {
         accessibilityHint="Opens the contact page"
       >
         <Ionicons name="chatbubble-ellipses-outline" size={22} color="#AAAAAA" />
-        <Text style={styles.tabLabel}>Chat</Text>
+        <Text style={styles.tabLabel}>{t('tab_chat')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -221,6 +235,22 @@ const styles = StyleSheet.create({
   loginIconBtn: {
     backgroundColor: Colors.primary,
     borderColor: Colors.primary,
+  },
+  langBtn: {
+    height: 40,
+    paddingHorizontal: 10,
+    borderRadius: 12,
+    backgroundColor: Colors.heroBg,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: Colors.primary,
+  },
+  langBtnText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: Colors.primary,
+    letterSpacing: 0.5,
   },
   badge: {
     position: 'absolute',
