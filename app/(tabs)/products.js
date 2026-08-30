@@ -14,13 +14,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import { useProducts } from '@/context/ProductContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 const FILTERS = ['All', 'Available', 'Out of Stock'];
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const GRID_ITEM_WIDTH = (SCREEN_WIDTH - 48) / 2;
 
 // ─── List Card ────────────────────────────────────────────────────────────────
-function ListCard({ item, onPress, onOrder }) {
+function ListCard({ item, onPress, onOrder, t }) {
   const priceText = item.price
     ? `${item.price.toLocaleString()} ${item.currency} / ${item.priceUnit}`
     : null;
@@ -56,14 +57,14 @@ function ListCard({ item, onPress, onOrder }) {
 
         {/* Price */}
         <Text style={[styles.priceText, !priceText && styles.noPrice]}>
-          {priceText ?? 'Price not available'}
+          {priceText ?? t('common_price_na')}
         </Text>
 
         {/* Footer: available + order button */}
         <View style={styles.listFooter}>
           <View style={styles.availBadge}>
             <View style={styles.dot} />
-            <Text style={styles.availText}>Available</Text>
+            <Text style={styles.availText}>{t('common_available')}</Text>
           </View>
           <TouchableOpacity
             style={styles.orderBtn}
@@ -71,7 +72,7 @@ function ListCard({ item, onPress, onOrder }) {
             activeOpacity={0.85}
           >
             <Ionicons name="cart-outline" size={12} color={Colors.white} />
-            <Text style={styles.orderBtnText}>Order</Text>
+            <Text style={styles.orderBtnText}>{t('common_order')}</Text>
           </TouchableOpacity>
         </View>
       </View>
