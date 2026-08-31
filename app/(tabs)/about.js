@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import {
   Linking,
   ScrollView,
@@ -15,7 +15,7 @@ import Colors from '@/constants/colors';
 const WHATSAPP_NUMBER = '250783486662';
 
 function openWhatsApp() {
-  const msg = 'Hello GanaHeza, I would like to know more about your platform.';
+  const msg = 'Hello Gana Heza, I would like to know more about your platform.';
   const url = `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
   Linking.canOpenURL(url).then((ok) => {
     Linking.openURL(ok ? url : `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`);
@@ -59,8 +59,8 @@ export default function AboutScreen() {
           <View style={styles.brandIcon}>
             <Ionicons name="leaf" size={36} color={Colors.white} />
           </View>
-          <Text style={styles.brandName}>GanaHeza</Text>
-          <Text style={styles.brandTagline}>Agriculture Marketplace · Kayonza, Rwanda</Text>
+          <Text style={styles.brandName}>Gana Heza</Text>
+          <Text style={styles.brandTagline}>Gana Heza Company · Kayonza, Rwanda</Text>
 
           {/* WhatsApp quick button in hero */}
           <TouchableOpacity style={styles.heroWhatsapp} onPress={openWhatsApp} activeOpacity={0.85}>
@@ -85,11 +85,11 @@ export default function AboutScreen() {
               <View style={styles.cardIconWrap}>
                 <Ionicons name="information-circle-outline" size={20} color={Colors.primary} />
               </View>
-              <Text style={styles.cardTitle}>About GanaHeza</Text>
+              <Text style={styles.cardTitle}>About Gana Heza</Text>
             </View>
             <View style={styles.cardBody}>
               <Text style={styles.bodyText}>
-                GanaHeza is a digital agriculture platform designed to connect farmers and
+                Gana Heza is a digital agriculture platform designed to connect farmers and
                 agricultural stakeholders with reliable information about agricultural products,
                 market prices, available quantities and farming opportunities.
               </Text>
@@ -190,7 +190,7 @@ export default function AboutScreen() {
 
         {/* ── Footer ────────────────────────────────── */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>© 2026 GanaHeza · Kayonza, Rwanda</Text>
+          <Text style={styles.footerText}>© 2026 Gana Heza · Kayonza, Rwanda</Text>
           <TouchableOpacity onPress={() => Linking.openURL('mailto:info@ganaheza.com')}>
             <Text style={styles.footerLink}>info@ganaheza.com</Text>
           </TouchableOpacity>

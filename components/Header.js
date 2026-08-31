@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
@@ -17,8 +17,8 @@ export default function Header({ onNotificationPress }) {
           <Ionicons name="leaf" size={18} color={Colors.white} />
         </View>
         <View>
-          <Text style={styles.appName}>GanaHeza</Text>
-          <Text style={styles.tagline}>Agriculture Marketplace</Text>
+          <Text style={styles.appName}>Gana Heza</Text>
+          <Text style={styles.tagline}>Gana Heza Company</Text>
         </View>
       </View>
 

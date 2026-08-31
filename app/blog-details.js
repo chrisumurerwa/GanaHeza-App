@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Linking,
@@ -18,7 +18,7 @@ import { getBlogPostById } from '@/services/api';
 const WHATSAPP_NUMBER = '250783486662';
 
 function openWhatsApp(title) {
-  const msg = `Check out this article from GanaHeza: "${title}" - Learn more on GanaHeza Agriculture Marketplace`;
+  const msg = `Check out this article from Gana Heza: "${title}" - Learn more on Gana Heza Company`;
   const url = `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
   Linking.canOpenURL(url).then((ok) => {
     Linking.openURL(ok ? url : `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`);
@@ -29,7 +29,7 @@ async function shareArticle(post) {
   try {
     await Share.share({
       title: post.title,
-      message: `${post.title}\n\n${post.summary}\n\nShared from GanaHeza Agriculture Marketplace`,
+      message: `${post.title}\n\n${post.summary}\n\nShared from Gana Heza Company`,
     });
   } catch {
     Alert.alert('Error', 'Could not share this article.');
@@ -196,7 +196,7 @@ export default function BlogDetailsScreen() {
             activeOpacity={0.75}
           >
             <Ionicons name="leaf-outline" size={14} color={Colors.primary} />
-            <Text style={styles.footerTagText}>GanaHeza Agriculture</Text>
+            <Text style={styles.footerTagText}>Gana Heza Company</Text>
           </TouchableOpacity>
         </View>
 

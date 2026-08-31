@@ -1,5 +1,5 @@
 ﻿/**
- * GanaHeza App — Translations
+ * Gana Heza App — Translations
  * Supported languages: English (en) | Kinyarwanda (rw)
  *
  * Usage:  const { t } = useLanguage();
@@ -66,7 +66,7 @@ const translations = {
   home_browse_cat:     { en: 'Browse by Category',       rw: 'Shakisha mu Nzego' },
   home_featured:       { en: 'Featured Products',        rw: 'Ibicuruzwa Byihariye' },
   home_todays_market:  { en: "Today's Market",           rw: "Isoko ry'Uyu Munsi" },
-  home_why_ganaheza:   { en: 'Why GanaHeza?',            rw: 'Kuki GanaHeza?' },
+  home_why_ganaheza:   { en: 'Why Gana Heza?',            rw: 'Kuki Gana Heza?' },
   home_latest_articles:{ en: 'Latest Articles',          rw: 'Ikiganiro Gishya' },
   home_view_all:       { en: 'View All',                 rw: 'Reba Byose' },
   home_no_products_cat:{ en: 'No products in this category', rw: 'Nta bicuruzwa muri iyi nzego' },
@@ -115,7 +115,7 @@ const translations = {
 
   // ─── Login Screen ──────────────────────────────────────────────────────────
   login_title:         { en: 'Welcome Back',               rw: 'Murakaza Neza' },
-  login_subtitle:      { en: 'Sign in to your GanaHeza account', rw: 'Injira muri konti yawe ya GanaHeza' },
+  login_subtitle:      { en: 'Sign in to your Gana Heza account', rw: 'Injira muri konti yawe ya Gana Heza' },
   login_email_label:   { en: 'Email Address',              rw: 'Aderesi ya Imeyili' },
   login_email_ph:      { en: 'your@email.com',             rw: 'imeyili@yawe.com' },
   login_password_label:{ en: 'Password',                   rw: 'Ijambo banga' },
@@ -158,14 +158,14 @@ const translations = {
   order_continue_shopping:  { en: 'Continue Shopping',   rw: 'Komeza Gushorana' },
   order_view_cart:          { en: 'View Cart',           rw: 'Reba Agatabu' },
   order_success_title:      { en: 'Order Placed Successfully!', rw: 'Isaba Ryakozwe neza!' },
-  order_success_body:       { en: 'Order {id} for {qty} {unit} of {name} has been sent to GanaHeza. We will contact you at {phone}.', rw: 'Isaba {id} rya {qty} {unit} ya {name} ryoherejwe kuri GanaHeza. Tuzakuvugisha kuri {phone}.' },
+  order_success_body:       { en: 'Order {id} for {qty} {unit} of {name} has been sent to Gana Heza. We will contact you at {phone}.', rw: 'Isaba {id} rya {qty} {unit} ya {name} ryoherejwe kuri Gana Heza. Tuzakuvugisha kuri {phone}.' },
   order_fail_title:         { en: 'Order Failed',        rw: 'Isaba Ryanze' },
   order_fail_body:          { en: 'Something went wrong while submitting your order. Please check your connection and try again.', rw: 'Habaye ikibazo mu kohereza isaba ryawe. Reba itumanaho ugerageze.' },
   order_in_stock:           { en: 'In Stock',            rw: 'Biraboneka' },
   order_loading:            { en: 'Loading…',            rw: 'Gutegereza…' },
 
   // ─── Contact Screen ────────────────────────────────────────────────────────
-  contact_hero_title:    { en: 'Contact GanaHeza',        rw: 'Vugana na GanaHeza' },
+  contact_hero_title:    { en: 'Contact Gana Heza',        rw: 'Vugana na Gana Heza' },
   contact_hero_subtitle: { en: "We're here to help. Reach out anytime.", rw: 'Turaho kugufasha. Twandikire igihe cyo ose.' },
   contact_whatsapp_btn:  { en: 'Chat on WhatsApp',        rw: 'Vugana kuri WhatsApp' },
   contact_info_title:    { en: 'Contact Information',     rw: 'Amakuru yo Gutumanahana' },
@@ -228,7 +228,7 @@ const translations = {
   pd_code_label:        { en: 'Product Code',          rw: 'Kode' },
   pd_description_title: { en: 'Description',           rw: 'Ibisobanuro' },
   pd_quality_title:     { en: 'Quality Guaranteed',    rw: 'Ireme Ryaremezwa' },
-  pd_quality_body:      { en: 'All GanaHeza products are sourced from verified Rwandan farmers and meet export quality standards.', rw: 'Ibicuruzwa byose bya GanaHeza biva ku bahinzi b\'u Rwanda bageragejwe kandi bihura n\'ingamba z\'ireme ryo kohereza.' },
+  pd_quality_body:      { en: 'All Gana Heza products are sourced from verified Rwandan farmers and meet export quality standards.', rw: 'Ibicuruzwa byose bya Gana Heza biva ku bahinzi b\'u Rwanda bageragejwe kandi bihura n\'ingamba z\'ireme ryo kohereza.' },
   pd_order_now:         { en: 'Order Now',             rw: 'Saba Ubu' },
   pd_loading:           { en: 'Loading product…',      rw: 'Gutegereza igicuruzwa…' },
   pd_not_found:         { en: 'Product not found.',    rw: 'Igicuruzwa ntigibonetse.' },
@@ -276,7 +276,7 @@ const translations = {
 
   // ─── Dashboard ─────────────────────────────────────────────────────────────
   dash_admin_title:     { en: 'Admin Portal',          rw: 'Ikibanza cy\'Umuyobozi' },
-  dash_admin_sub:       { en: 'GanaHeza Management',   rw: 'Kuyobora GanaHeza' },
+  dash_admin_sub:       { en: 'Gana Heza Management',   rw: 'Kuyobora Gana Heza' },
   dash_exit:            { en: 'Exit',                  rw: 'Sohoka' },
   dash_tab_overview:    { en: 'Overview',              rw: 'Incamake' },
   dash_tab_products:    { en: 'Products',              rw: 'Ibicuruzwa' },
@@ -310,11 +310,11 @@ const translations = {
   dash_signout_confirm_body:  { en: 'Are you sure you want to sign out from the Admin Dashboard?', rw: 'Urashaka gusohoka mu kibanza cy\'Umuyobozi?' },
   dash_signout_btn:     { en: 'Sign Out',              rw: 'Sohoka' },
   dash_product_published_title: { en: 'Product Published!', rw: 'Igicuruzwa Cyashyizweho!' },
-  dash_product_published_body:  { en: '"{name}" is now live and visible across the GanaHeza marketplace.', rw: '"{name}" ubu irahari kandi iboneka kuri GanaHeza.' },
+  dash_product_published_body:  { en: '"{name}" is now live and visible across the Gana Heza marketplace.', rw: '"{name}" ubu irahari kandi iboneka kuri Gana Heza.' },
   dash_delete_product_title: { en: 'Delete Product',   rw: 'Siba Igicuruzwa' },
   dash_delete_product_body:  { en: 'Are you sure you want to delete "{name}"? It will be removed from the marketplace.', rw: 'Urashaka gusiba "{name}"? Izakurwa kuri marketplace.' },
   dash_add_modal_title: { en: 'Add New Product',       rw: 'Ongeraho Igicuruzwa Gishya' },
-  dash_add_modal_sub:   { en: 'Publish fresh produce to GanaHeza', rw: 'Shyira ibicuruzwa bishya kuri GanaHeza' },
+  dash_add_modal_sub:   { en: 'Publish fresh produce to Gana Heza', rw: 'Shyira ibicuruzwa bishya kuri Gana Heza' },
   dash_photo_section:   { en: 'Product Photo *',       rw: 'Ifoto y\'Igicuruzwa *' },
   dash_gallery_mode:    { en: 'Device Gallery',        rw: 'Galeri y\'Igikoresho' },
   dash_presets_mode:    { en: 'Presets',               rw: 'Ifoto z\'Iteguranye' },
@@ -338,7 +338,7 @@ const translations = {
 
   // ─── Login screen ─────────────────────────────────────────────────────────
   login_welcome:           { en: 'Welcome Back',          rw: 'Murakaza Neza' },
-  login_subtitle:          { en: 'Sign in to your GanaHeza account', rw: 'Injira kuri konte yawe ya GanaHeza' },
+  login_subtitle:          { en: 'Sign in to your Gana Heza account', rw: 'Injira kuri konte yawe ya Gana Heza' },
   login_email_label:       { en: 'Email Address',         rw: 'Aderesi ya Imeyili' },
   login_email_ph:          { en: 'Enter your email',      rw: 'Andika imeyili yawe' },
   login_password_label:    { en: 'Password',              rw: 'Ijambo banga' },

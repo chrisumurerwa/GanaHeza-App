@@ -1,4 +1,4 @@
-const blogPosts = [
+﻿const blogPosts = [
   {
     id: '1',
     category: 'Farming Tips',
@@ -6,7 +6,7 @@ const blogPosts = [
     summary: 'Learn effective techniques for cultivating Habanero peppers in Rwandan highlands, from soil preparation to pest management.',
     content: 'Habanero peppers thrive in Rwanda\'s highland climate with the right conditions.\n\n**Soil Preparation**\nHabaneros prefer well-drained, loamy soil with a pH between 6.0 and 7.0. Prepare your land by tilling to a depth of 30 cm and incorporating organic compost.\n\n**Planting Season**\nThe best time to plant is at the onset of the rainy season. Seedlings should be started indoors 8-10 weeks before transplanting.\n\n**Watering**\nConsistent moisture is crucial, especially during flowering and fruit development.\n\n**Harvesting**\nHabaneros are ready for harvest 90-100 days after transplanting. Pick fruits when they are fully colored for maximum heat and flavor.',
     date: '2026-07-15',
-    author: 'GanaHeza Agricultural Team',
+    author: 'Gana Heza Company Team',
     readTime: '5 min read',
   },
   {
@@ -26,7 +26,7 @@ const blogPosts = [
     summary: 'French beans remain one of Rwanda\'s top export vegetables. Discover how to manage your crop for consistent, export-quality yields.',
     content: 'French beans are among Rwanda\'s most valuable export vegetables, with consistent demand from European supermarkets.\n\n**Variety Selection**\nChoose certified, export-preferred varieties recommended by your cooperative or agricultural extension officer.\n\n**Irrigation Management**\nDrip irrigation is the most efficient method for French beans. Maintain consistent moisture but avoid overwatering.\n\n**Harvest and Post-Harvest**\nHarvest every 2-3 days to maintain pod quality. Use clean, ventilated containers and move to cool storage quickly.',
     date: '2026-07-05',
-    author: 'GanaHeza Agricultural Team',
+    author: 'Gana Heza Company Team',
     readTime: '6 min read',
   },
   {
@@ -54,9 +54,9 @@ const blogPosts = [
     category: 'Agricultural News',
     title: 'Rwanda Agricultural Exports Reach Record Levels in 2026',
     summary: 'Rwanda\'s agricultural export sector is booming. Discover what this means for farmers and how to position yourself for maximum benefit.',
-    content: 'Rwanda\'s agricultural exports have reached record levels in 2026, driven by strong international demand.\n\n**Key Growth Sectors**\nThe fastest growing export categories include Hass Avocados, Chilli Peppers, French Beans, Coffee, and Macadamia Nuts.\n\n**Opportunities for Farmers**\nThis growth creates real opportunities for smallholder farmers who can meet consistent quality and volume requirements.\n\n**GanaHeza\'s Role**\nGanaHeza is committed to connecting Rwanda\'s farmers with the buyers and information they need to participate fully in this growing market.',
+    content: 'Rwanda\'s agricultural exports have reached record levels in 2026, driven by strong international demand.\n\n**Key Growth Sectors**\nThe fastest growing export categories include Hass Avocados, Chilli Peppers, French Beans, Coffee, and Macadamia Nuts.\n\n**Opportunities for Farmers**\nThis growth creates real opportunities for smallholder farmers who can meet consistent quality and volume requirements.\n\n**Gana Heza\'s Role**\nGana Heza is committed to connecting Rwanda\'s farmers with the buyers and information they need to participate fully in this growing market.',
     date: '2026-06-15',
-    author: 'GanaHeza News Desk',
+    author: 'Gana Heza News Desk',
     readTime: '4 min read',
   },
 ];
