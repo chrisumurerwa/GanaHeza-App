@@ -341,7 +341,7 @@ const translations = {
   login_subtitle:          { en: 'Sign in to your Gana Heza account', rw: 'Injira kuri konte yawe ya Gana Heza' },
   login_email_label:       { en: 'Email Address',         rw: 'Aderesi ya Imeyili' },
   login_email_ph:          { en: 'Enter your email',      rw: 'Andika imeyili yawe' },
-  login_password_label:    { en: 'Password',              rw: 'Ijambo banga' },
+  login_password_label:    { en: 'Password',              rw: 'Ijambo banga' }, // v1.0.3
   login_password_ph:       { en: 'Enter your password',   rw: 'Andika ijambo banga' },
   login_forgot:            { en: 'Forgot password?',      rw: 'Wibagiwe ijambo banga?' },
   login_signin:            { en: 'Sign In',               rw: 'Kwinjira' },
