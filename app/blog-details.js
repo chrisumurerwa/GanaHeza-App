@@ -18,7 +18,7 @@ import { getBlogPostById } from '@/services/api';
 const WHATSAPP_NUMBER = '250783486662';
 
 function openWhatsApp(title) {
-  const msg = `Check out this article from Gana Heza: "${title}" - Learn more on Gana Heza Company`;
+  const msg = `Check out this article from GANA HEZA: "${title}" - Learn more on GANA HEZA Company`;
   const url = `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
   Linking.canOpenURL(url).then((ok) => {
     Linking.openURL(ok ? url : `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`);
@@ -29,7 +29,7 @@ async function shareArticle(post) {
   try {
     await Share.share({
       title: post.title,
-      message: `${post.title}\n\n${post.summary}\n\nShared from Gana Heza Company`,
+      message: `${post.title}\n\n${post.summary}\n\nShared from GANA HEZA Company`,
     });
   } catch {
     Alert.alert('Error', 'Could not share this article.');
@@ -196,7 +196,7 @@ export default function BlogDetailsScreen() {
             activeOpacity={0.75}
           >
             <Ionicons name="leaf-outline" size={14} color={Colors.primary} />
-            <Text style={styles.footerTagText}>Gana Heza Company</Text>
+            <Text style={styles.footerTagText}>GANA HEZA Company</Text>
           </TouchableOpacity>
         </View>
 

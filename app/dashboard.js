@@ -255,7 +255,7 @@ export default function DashboardScreen() {
 
     Alert.alert(
       'Product Published! ­ƒî▒',
-      `"${created.name}" is now live and visible across the Gana Heza marketplace.`
+      `"${created.name}" is now live and visible across the GANA HEZA marketplace.`
     );
     setActiveTab('Products');
   }
@@ -282,7 +282,7 @@ export default function DashboardScreen() {
     if (!phone) return;
     const cleanPhone = phone.replace(/[^0-9]/g, '');
     const message = encodeURIComponent(
-      `Hello ${customerName}, this is Gana Heza Company regarding your order for ${productName}.`
+      `Hello ${customerName}, this is GANA HEZA Company regarding your order for ${productName}.`
     );
     Linking.openURL(`whatsapp://send?phone=${cleanPhone}&text=${message}`).catch(() => {
       Alert.alert('WhatsApp Not Installed', `Please contact ${customerName} directly at ${phone}`);
@@ -291,8 +291,8 @@ export default function DashboardScreen() {
 
   function handleEmailCustomer(email, customerName, orderId) {
     if (!email) return;
-    const subject = encodeURIComponent(`Gana Heza Order Confirmation - ${orderId}`);
-    const body = encodeURIComponent(`Hello ${customerName},\n\nThank you for ordering with Gana Heza Company.`);
+    const subject = encodeURIComponent(`GANA HEZA Order Confirmation - ${orderId}`);
+    const body = encodeURIComponent(`Hello ${customerName},\n\nThank you for ordering with GANA HEZA Company.`);
     Linking.openURL(`mailto:${email}?subject=${subject}&body=${body}`).catch(() => {
       Alert.alert('Unable to Email', `Could not open mail app for ${email}`);
     });
@@ -329,7 +329,7 @@ export default function DashboardScreen() {
           <Image source={LOGO} style={styles.logo} resizeMode="contain" />
           <View>
             <Text style={styles.adminTitle}>Admin Portal</Text>
-            <Text style={styles.adminSub}>Gana Heza Management</Text>
+            <Text style={styles.adminSub}>GANA HEZA Management</Text>
           </View>
         </View>
         <View style={styles.topBarActions}>
@@ -1036,7 +1036,7 @@ export default function DashboardScreen() {
             <View style={styles.modalHeader}>
               <View>
                 <Text style={styles.modalHeaderTitle}>Add New Product</Text>
-                <Text style={styles.modalHeaderSub}>Publish fresh produce to Gana Heza</Text>
+                <Text style={styles.modalHeaderSub}>Publish fresh produce to GANA HEZA</Text>
               </View>
               <TouchableOpacity
                 style={styles.modalCloseBtn}

@@ -42,9 +42,7 @@ export async function getMe() {
 }
 
 /**
- * Request a password reset token for a given email.
- * Returns { message, resetToken? } — the reset token is included
- * directly in the response (no email service yet).
+ * Request a 6-digit OTP for password reset. OTP is sent to the email.
  */
 export async function forgotPassword(email) {
   return apiFetch('/api/auth/forgot-password', {
@@ -54,12 +52,12 @@ export async function forgotPassword(email) {
 }
 
 /**
- * Reset password using a reset token obtained from forgotPassword().
+ * Reset password using the 6-digit OTP sent to the user's email.
  */
-export async function resetPassword(resetToken, newPassword) {
+export async function resetPassword(email, otp, newPassword) {
   return apiFetch('/api/auth/reset-password', {
     method: 'POST',
-    body: JSON.stringify({ resetToken, newPassword }),
+    body: JSON.stringify({ email, otp, newPassword }),
   });
 }
 

@@ -36,14 +36,14 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
 
   // ── Forgot-password modal state ─────────────────────────────────────────────
-  const [showForgot, setShowForgot] = useState(false);
-  const [forgotStep, setForgotStep] = useState(1); // 1 = email, 2 = new password
-  const [forgotEmail, setForgotEmail] = useState('');
-  const [resetToken, setResetToken] = useState('');
-  const [newPass, setNewPass] = useState('');
-  const [confirmPass, setConfirmPass] = useState('');
+  const [showForgot, setShowForgot]       = useState(false);
+  const [forgotStep, setForgotStep]       = useState(1); // 1=email, 2=otp+newpass
+  const [forgotEmail, setForgotEmail]     = useState('');
+  const [otpCode, setOtpCode]             = useState('');
+  const [newPass, setNewPass]             = useState('');
+  const [confirmPass, setConfirmPass]     = useState('');
   const [forgotLoading, setForgotLoading] = useState(false);
-  const [showNewPass, setShowNewPass] = useState(false);
+  const [showNewPass, setShowNewPass]     = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
 
   // ── Handlers ────────────────────────────────────────────────────────────────
@@ -73,7 +73,7 @@ export default function LoginScreen() {
   function openForgotModal() {
     setForgotStep(1);
     setForgotEmail(email);
-    setResetToken('');
+    setOtpCode('');
     setNewPass('');
     setConfirmPass('');
     setShowForgot(true);
@@ -82,65 +82,52 @@ export default function LoginScreen() {
   function closeForgotModal() {
     setShowForgot(false);
     setForgotStep(1);
-    setResetToken('');
+    setOtpCode('');
     setNewPass('');
     setConfirmPass('');
     setForgotLoading(false);
   }
 
-  async function handleGetResetToken() {
+  // Step 1: Send OTP to email
+  async function handleSendOtp() {
     if (!forgotEmail.trim()) {
       Alert.alert(t('login_missing_fields'), t('login_missing_body'));
       return;
     }
-
     setForgotLoading(true);
     try {
-      const data = await apiForgotPassword(forgotEmail.trim());
-      if (data.resetToken) {
-        setResetToken(data.resetToken);
-        setForgotStep(2);
-        Alert.alert(
-          t('common_success'),
-          t('forgot_email_sent') + '\n\n' + data.resetToken
-        );
-      } else {
-        // Email not found — show generic message (security)
-        Alert.alert(t('forgot_error_title'), t('forgot_email_not_found'));
-      }
+      await apiForgotPassword(forgotEmail.trim());
+      // Always move to step 2 (don't reveal if email exists)
+      setForgotStep(2);
+      Alert.alert(t('forgot_code_sent'), t('forgot_code_sent_body'));
     } catch (err) {
-      Alert.alert(
-        t('forgot_error_title'),
-        err?.message || 'Something went wrong. Please try again.'
-      );
+      Alert.alert(t('forgot_error_title'), err?.message || 'Something went wrong. Please try again.');
     } finally {
       setForgotLoading(false);
     }
   }
 
+  // Step 2: Verify OTP + set new password
   async function handleResetPassword() {
+    if (!otpCode.trim() || otpCode.length !== 6) {
+      Alert.alert(t('forgot_error_title'), t('forgot_otp_required'));
+      return;
+    }
     if (newPass.length < 6) {
       Alert.alert(t('forgot_pass_short_title'), t('forgot_pass_short_body'));
       return;
     }
     if (newPass !== confirmPass) {
-      Alert.alert(
-        t('forgot_pass_mismatch_title'),
-        t('forgot_pass_mismatch_body')
-      );
+      Alert.alert(t('forgot_pass_mismatch_title'), t('forgot_pass_mismatch_body'));
       return;
     }
-
     setForgotLoading(true);
     try {
-      await apiResetPassword(resetToken, newPass);
+      await apiResetPassword(forgotEmail.trim(), otpCode.trim(), newPass);
       Alert.alert(t('forgot_success_title'), t('forgot_success_body'));
       closeForgotModal();
     } catch (err) {
-      Alert.alert(
-        t('forgot_error_title'),
-        err?.message || 'Something went wrong. Please try again.'
-      );
+      Alert.alert(t('forgot_error_title'), err?.message || 'Something went wrong. Please try again.');
     } finally {
       setForgotLoading(false);
     }
@@ -312,12 +299,7 @@ export default function LoginScreen() {
 
                 <Text style={styles.fieldLabel}>{t('forgot_email_label')}</Text>
                 <View style={styles.inputWrap}>
-                  <Ionicons
-                    name="mail-outline"
-                    size={18}
-                    color={Colors.textSecondary}
-                    style={styles.inputIcon}
-                  />
+                  <Ionicons name="mail-outline" size={18} color={Colors.textSecondary} style={styles.inputIcon} />
                   <TextInput
                     style={styles.input}
                     value={forgotEmail}
@@ -331,11 +313,8 @@ export default function LoginScreen() {
                 </View>
 
                 <TouchableOpacity
-                  style={[
-                    styles.modalBtn,
-                    forgotLoading && styles.loginBtnDisabled,
-                  ]}
-                  onPress={handleGetResetToken}
+                  style={[styles.modalBtn, forgotLoading && styles.loginBtnDisabled]}
+                  onPress={handleSendOtp}
                   disabled={forgotLoading}
                   activeOpacity={0.85}
                 >
@@ -345,19 +324,29 @@ export default function LoginScreen() {
                 </TouchableOpacity>
               </View>
             ) : (
-              // ── Step 2: Set new password ──
+              // ── Step 2: Enter OTP + new password ──
               <View>
                 <Text style={styles.modalDesc}>{t('forgot_step2_desc')}</Text>
+
+                {/* OTP code */}
+                <Text style={styles.fieldLabel}>{t('forgot_otp_label')}</Text>
+                <View style={[styles.inputWrap, { marginBottom: 14 }]}>
+                  <Ionicons name="keypad-outline" size={18} color={Colors.textSecondary} style={styles.inputIcon} />
+                  <TextInput
+                    style={[styles.input, { letterSpacing: 6, fontSize: 20, fontWeight: '700' }]}
+                    value={otpCode}
+                    onChangeText={(v) => setOtpCode(v.replace(/[^0-9]/g, '').slice(0, 6))}
+                    placeholder="000000"
+                    placeholderTextColor={Colors.textSecondary}
+                    keyboardType="number-pad"
+                    maxLength={6}
+                  />
+                </View>
 
                 {/* New Password */}
                 <Text style={styles.fieldLabel}>{t('forgot_new_pass_label')}</Text>
                 <View style={styles.inputWrap}>
-                  <Ionicons
-                    name="lock-closed-outline"
-                    size={18}
-                    color={Colors.textSecondary}
-                    style={styles.inputIcon}
-                  />
+                  <Ionicons name="lock-closed-outline" size={18} color={Colors.textSecondary} style={styles.inputIcon} />
                   <TextInput
                     style={styles.input}
                     value={newPass}
@@ -368,28 +357,15 @@ export default function LoginScreen() {
                     autoCapitalize="none"
                     autoCorrect={false}
                   />
-                  <TouchableOpacity
-                    onPress={() => setShowNewPass(!showNewPass)}
-                    style={styles.eyeBtn}
-                    activeOpacity={0.7}
-                  >
-                    <Ionicons
-                      name={showNewPass ? 'eye-off-outline' : 'eye-outline'}
-                      size={19}
-                      color={Colors.textSecondary}
-                    />
+                  <TouchableOpacity onPress={() => setShowNewPass(!showNewPass)} style={styles.eyeBtn} activeOpacity={0.7}>
+                    <Ionicons name={showNewPass ? 'eye-off-outline' : 'eye-outline'} size={19} color={Colors.textSecondary} />
                   </TouchableOpacity>
                 </View>
 
                 {/* Confirm Password */}
-                <Text style={styles.fieldLabel}>{t('forgot_confirm_label')}</Text>
+                <Text style={[styles.fieldLabel, { marginTop: 14 }]}>{t('forgot_confirm_label')}</Text>
                 <View style={styles.inputWrap}>
-                  <Ionicons
-                    name="lock-closed-outline"
-                    size={18}
-                    color={Colors.textSecondary}
-                    style={styles.inputIcon}
-                  />
+                  <Ionicons name="lock-closed-outline" size={18} color={Colors.textSecondary} style={styles.inputIcon} />
                   <TextInput
                     style={styles.input}
                     value={confirmPass}
@@ -400,24 +376,13 @@ export default function LoginScreen() {
                     autoCapitalize="none"
                     autoCorrect={false}
                   />
-                  <TouchableOpacity
-                    onPress={() => setShowConfirmPass(!showConfirmPass)}
-                    style={styles.eyeBtn}
-                    activeOpacity={0.7}
-                  >
-                    <Ionicons
-                      name={showConfirmPass ? 'eye-off-outline' : 'eye-outline'}
-                      size={19}
-                      color={Colors.textSecondary}
-                    />
+                  <TouchableOpacity onPress={() => setShowConfirmPass(!showConfirmPass)} style={styles.eyeBtn} activeOpacity={0.7}>
+                    <Ionicons name={showConfirmPass ? 'eye-off-outline' : 'eye-outline'} size={19} color={Colors.textSecondary} />
                   </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity
-                  style={[
-                    styles.modalBtn,
-                    forgotLoading && styles.loginBtnDisabled,
-                  ]}
+                  style={[styles.modalBtn, forgotLoading && styles.loginBtnDisabled]}
                   onPress={handleResetPassword}
                   disabled={forgotLoading}
                   activeOpacity={0.85}
@@ -425,6 +390,11 @@ export default function LoginScreen() {
                   <Text style={styles.loginBtnText}>
                     {forgotLoading ? t('forgot_resetting') : t('forgot_reset_btn')}
                   </Text>
+                </TouchableOpacity>
+
+                {/* Resend code */}
+                <TouchableOpacity style={{ alignItems: 'center', marginTop: 12 }} onPress={() => setForgotStep(1)} activeOpacity={0.7}>
+                  <Text style={[styles.forgotText, { fontSize: 12 }]}>{t('forgot_send_code')} again</Text>
                 </TouchableOpacity>
               </View>
             )}

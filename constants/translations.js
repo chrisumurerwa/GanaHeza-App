@@ -115,7 +115,7 @@ const translations = {
 
   // ─── Login Screen ──────────────────────────────────────────────────────────
   login_title:         { en: 'Welcome Back',               rw: 'Murakaza Neza' },
-  login_subtitle:      { en: 'Sign in to your Gana Heza account', rw: 'Injira muri konti yawe ya Gana Heza' },
+  login_subtitle:      { en: 'Sign in to your Gana Heza account', rw: 'Injira muri konti yawe ya GANA HEZA' },
   login_email_label:   { en: 'Email Address',              rw: 'Aderesi ya Imeyili' },
   login_email_ph:      { en: 'your@email.com',             rw: 'imeyili@yawe.com' },
   login_password_label:{ en: 'Password',                   rw: 'Ijambo banga' },
@@ -127,7 +127,7 @@ const translations = {
   login_alert_missing_body:  { en: 'Please enter your email and password.', rw: 'Injiza imeyili n\'ijambo banga.' },
   login_alert_fail_title:    { en: 'Login Failed',         rw: 'Kwinjira Byanze' },
   login_alert_fail_body:     { en: 'Invalid email or password. Please check your credentials and try again.', rw: 'Imeyili cyangwa ijambo banga ntabwo ari byo. Reba neza ugerageze.' },
-  login_alert_forgot_title:  { en: 'Forgot Password',      rw: 'Wibagiwe Ijambo Banga' },
+  login_alert_forgot_title:            { en: 'Reset Password',        rw: 'Hindura Ijambo Banga' },
   login_alert_forgot_body:   { en: 'Password reset functionality will be available soon.', rw: 'Guhindura ijambo banga bizaboneka vuba.' },
 
   // ─── Order Screen ──────────────────────────────────────────────────────────
@@ -158,14 +158,14 @@ const translations = {
   order_continue_shopping:  { en: 'Continue Shopping',   rw: 'Komeza Gushorana' },
   order_view_cart:          { en: 'View Cart',           rw: 'Reba Agatabu' },
   order_success_title:      { en: 'Order Placed Successfully!', rw: 'Isaba Ryakozwe neza!' },
-  order_success_body:       { en: 'Order {id} for {qty} {unit} of {name} has been sent to Gana Heza. We will contact you at {phone}.', rw: 'Isaba {id} rya {qty} {unit} ya {name} ryoherejwe kuri Gana Heza. Tuzakuvugisha kuri {phone}.' },
+  order_success_body:       { en: 'Order {id} for {qty} {unit} of {name} has been sent to Gana Heza. We will contact you at {phone}.', rw: 'Isaba {id} rya {qty} {unit} ya {name} ryoherejwe kuri GANA HEZA. Tuzakuvugisha kuri {phone}.' },
   order_fail_title:         { en: 'Order Failed',        rw: 'Isaba Ryanze' },
   order_fail_body:          { en: 'Something went wrong while submitting your order. Please check your connection and try again.', rw: 'Habaye ikibazo mu kohereza isaba ryawe. Reba itumanaho ugerageze.' },
   order_in_stock:           { en: 'In Stock',            rw: 'Biraboneka' },
   order_loading:            { en: 'Loading…',            rw: 'Gutegereza…' },
 
   // ─── Contact Screen ────────────────────────────────────────────────────────
-  contact_hero_title:    { en: 'Contact Gana Heza',        rw: 'Vugana na Gana Heza' },
+  contact_hero_title:    { en: 'Contact GANA HEZA',        rw: 'Vugana na GANA HEZA' },
   contact_hero_subtitle: { en: "We're here to help. Reach out anytime.", rw: 'Turaho kugufasha. Twandikire igihe cyo ose.' },
   contact_whatsapp_btn:  { en: 'Chat on WhatsApp',        rw: 'Vugana kuri WhatsApp' },
   contact_info_title:    { en: 'Contact Information',     rw: 'Amakuru yo Gutumanahana' },
@@ -228,7 +228,7 @@ const translations = {
   pd_code_label:        { en: 'Product Code',          rw: 'Kode' },
   pd_description_title: { en: 'Description',           rw: 'Ibisobanuro' },
   pd_quality_title:     { en: 'Quality Guaranteed',    rw: 'Ireme Ryaremezwa' },
-  pd_quality_body:      { en: 'All Gana Heza products are sourced from verified Rwandan farmers and meet export quality standards.', rw: 'Ibicuruzwa byose bya Gana Heza biva ku bahinzi b\'u Rwanda bageragejwe kandi bihura n\'ingamba z\'ireme ryo kohereza.' },
+  pd_quality_body:      { en: 'All Gana Heza products are sourced from verified Rwandan farmers and meet export quality standards.', rw: 'Ibicuruzwa byose bya GANA HEZA biva ku bahinzi b\'u Rwanda bageragejwe kandi bihura n\'ingamba z\'ireme ryo kohereza.' },
   pd_order_now:         { en: 'Order Now',             rw: 'Saba Ubu' },
   pd_loading:           { en: 'Loading product…',      rw: 'Gutegereza igicuruzwa…' },
   pd_not_found:         { en: 'Product not found.',    rw: 'Igicuruzwa ntigibonetse.' },
@@ -276,7 +276,7 @@ const translations = {
 
   // ─── Dashboard ─────────────────────────────────────────────────────────────
   dash_admin_title:     { en: 'Admin Portal',          rw: 'Ikibanza cy\'Umuyobozi' },
-  dash_admin_sub:       { en: 'Gana Heza Management',   rw: 'Kuyobora Gana Heza' },
+  dash_admin_sub:       { en: 'GANA HEZA Management',   rw: 'Kuyobora GANA HEZA' },
   dash_exit:            { en: 'Exit',                  rw: 'Sohoka' },
   dash_tab_overview:    { en: 'Overview',              rw: 'Incamake' },
   dash_tab_products:    { en: 'Products',              rw: 'Ibicuruzwa' },
@@ -310,11 +310,11 @@ const translations = {
   dash_signout_confirm_body:  { en: 'Are you sure you want to sign out from the Admin Dashboard?', rw: 'Urashaka gusohoka mu kibanza cy\'Umuyobozi?' },
   dash_signout_btn:     { en: 'Sign Out',              rw: 'Sohoka' },
   dash_product_published_title: { en: 'Product Published!', rw: 'Igicuruzwa Cyashyizweho!' },
-  dash_product_published_body:  { en: '"{name}" is now live and visible across the Gana Heza marketplace.', rw: '"{name}" ubu irahari kandi iboneka kuri Gana Heza.' },
+  dash_product_published_body:  { en: '"{name}" is now live and visible across the Gana Heza marketplace.', rw: '"{name}" ubu irahari kandi iboneka kuri GANA HEZA.' },
   dash_delete_product_title: { en: 'Delete Product',   rw: 'Siba Igicuruzwa' },
   dash_delete_product_body:  { en: 'Are you sure you want to delete "{name}"? It will be removed from the marketplace.', rw: 'Urashaka gusiba "{name}"? Izakurwa kuri marketplace.' },
   dash_add_modal_title: { en: 'Add New Product',       rw: 'Ongeraho Igicuruzwa Gishya' },
-  dash_add_modal_sub:   { en: 'Publish fresh produce to Gana Heza', rw: 'Shyira ibicuruzwa bishya kuri Gana Heza' },
+  dash_add_modal_sub:   { en: 'Publish fresh produce to GANA HEZA', rw: 'Shyira ibicuruzwa bishya kuri GANA HEZA' },
   dash_photo_section:   { en: 'Product Photo *',       rw: 'Ifoto y\'Igicuruzwa *' },
   dash_gallery_mode:    { en: 'Device Gallery',        rw: 'Galeri y\'Igikoresho' },
   dash_presets_mode:    { en: 'Presets',               rw: 'Ifoto z\'Iteguranye' },
@@ -338,7 +338,7 @@ const translations = {
 
   // ─── Login screen ─────────────────────────────────────────────────────────
   login_welcome:           { en: 'Welcome Back',          rw: 'Murakaza Neza' },
-  login_subtitle:          { en: 'Sign in to your Gana Heza account', rw: 'Injira kuri konte yawe ya Gana Heza' },
+  login_subtitle:          { en: 'Sign in to your Gana Heza account', rw: 'Injira kuri konte yawe ya GANA HEZA' },
   login_email_label:       { en: 'Email Address',         rw: 'Aderesi ya Imeyili' },
   login_email_ph:          { en: 'Enter your email',      rw: 'Andika imeyili yawe' },
   login_password_label:    { en: 'Password',              rw: 'Ijambo banga' }, // v1.0.3
@@ -351,13 +351,13 @@ const translations = {
   login_failed:            { en: 'Login Failed',          rw: 'Kwinjira Byanze' },
 
   // ─── Forgot Password ─────────────────────────────────────────────────────────
-  forgot_title:            { en: 'Reset Password',        rw: 'Gushyiraho Ijambo banga' },
-  forgot_step1_desc:       { en: 'Enter your email and we will generate a reset token for you.', rw: 'Andika imeyili yawe tukaguha tokeni yo gushyiraho ijambo banga.' },
+  forgot_title:            { en: 'Reset Password',        rw: 'Hindura Ijambo Banga' },
+  forgot_step1_desc:       { en: 'Enter your email and we will send you a 6-digit reset code.', rw: 'Andika imeyili yawe tukakuhereze kode y\'imibare 6.' },
   forgot_email_label:      { en: 'Email Address',         rw: 'Aderesi ya Imeyili' },
   forgot_email_ph:         { en: 'Enter your email',      rw: 'Andika imeyili yawe' },
-  forgot_send_code:        { en: 'Get Reset Token',       rw: 'Bona Tokeni' },
-  forgot_sending:          { en: 'Generating',            rw: 'Kurema' },
-  forgot_step2_desc:       { en: 'Use the reset token below to set your new password.', rw: 'Koresha tokeni iyibukurikira ushireho ijambo banga rishya.' },
+  forgot_send_code:        { en: 'Send Reset Code',       rw: 'Ohereza Kode' },
+  forgot_sending:          { en: 'Sending…',              rw: 'Kohereza…' },
+  forgot_step2_desc:       { en: 'Enter the 6-digit code sent to your email, then set your new password.', rw: 'Injiza kode y\'imibare 6 yoherejwe kuri imeyili yawe, hanyuma ushireho ijambo banga rishya.' },
   forgot_token_label:      { en: 'Reset Token',           rw: 'Tokeni' },
   forgot_new_pass_label:   { en: 'New Password',          rw: 'Ijambo banga Rishya' },
   forgot_new_pass_ph:      { en: 'Enter new password',    rw: 'Andika ijambo banga rishya' },
@@ -365,10 +365,10 @@ const translations = {
   forgot_confirm_ph:       { en: 'Re-enter new password', rw: 'Ongera wandike ijambo banga rishya' },
   forgot_reset_btn:        { en: 'Reset Password',        rw: 'Shyiraho Ijambo banga' },
   forgot_resetting:        { en: 'Resetting',             rw: 'Gushyiraho' },
-  forgot_success_title:    { en: 'Password Reset!',       rw: 'Ijambo banga Ryashyizweho!' },
-  forgot_success_body:     { en: 'Your password has been reset. You can now log in with your new password.', rw: 'Ijambo banga ryawe ryashyizweho. Ubu ushobora kwinjira n ijambo banga rishya.' },
-  forgot_email_sent:       { en: 'Reset token generated! Copy the token below to continue:', rw: 'Tokeni yaremwe! Kopiye tokeni iyibukurikira ukomeze:' },
-  forgot_email_not_found:  { en: 'If that email exists, a reset token has been generated.', rw: 'Niba imeyili iriho, tokeni yaremwe.' },
+  forgot_success_title:    { en: 'Password Reset!',       rw: 'Ijambo Banga Ryahinduwe!' },
+  forgot_success_body:     { en: 'Password reset successfully. You can now log in.', rw: 'Ijambo banga ryahinduwe neza. Ubu ushobora kwinjira.' },
+  forgot_code_sent:        { en: 'Code Sent!',            rw: 'Kode Yoherejwe!' },
+  forgot_email_not_found:  { en: 'If that email is registered, a reset code has been sent.', rw: 'Niba imeyili iriho, kode yoherejwe.' },
   forgot_pass_mismatch_title:  { en: 'Passwords Do Not Match', rw: 'Ijambo banga ntirihuye' },
   forgot_pass_mismatch_body:   { en: 'The passwords you entered do not match. Please try again.', rw: 'Ijambo banga wanditse ntirihuye. Ongera ugerageze.' },
   forgot_pass_short_title: { en: 'Password Too Short',    rw: 'Ijambo banga ryingufu' },

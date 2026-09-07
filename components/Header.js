@@ -17,8 +17,8 @@ export default function Header({ onNotificationPress }) {
           <Ionicons name="leaf" size={18} color={Colors.white} />
         </View>
         <View>
-          <Text style={styles.appName}>Gana Heza</Text>
-          <Text style={styles.tagline}>Gana Heza Company</Text>
+          <Text style={styles.appName}>GANA HEZA</Text>
+          <Text style={styles.tagline}>GANA HEZA Company</Text>
         </View>
       </View>
 
