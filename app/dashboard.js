@@ -22,6 +22,7 @@ import Colors from '@/constants/colors';
 import { useCart } from '@/context/CartContext';
 import { useProducts } from '@/context/ProductContext';
 import { getBlogPosts, changePassword as apiChangePassword } from '@/services/api';
+import { useLanguage } from '@/context/LanguageContext';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const LOGO = require('@/assets/images/Ganaheza LOGO.png');
@@ -57,6 +58,7 @@ export default function DashboardScreen() {
   const router = useRouter();
   const { orders, updateOrderStatus, deleteOrder } = useCart();
   const { products, addProduct, deleteProduct } = useProducts();
+  const { t } = useLanguage();
   
   const [activeTab, setActiveTab] = useState('Overview');
   const [posts, setPosts] = useState([]);
