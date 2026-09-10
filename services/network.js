@@ -13,10 +13,10 @@
  *   EXPO_PUBLIC_API_URL     — backend base URL (no trailing slash)
  *   EXPO_PUBLIC_API_TIMEOUT — request timeout in ms (default 15000)
  */
-:
+
 // ─── Config (from environment, with fallbacks) ───────────────────────────────
 const API_URL =
-  process.env.EXPO_PUBLIC_API_URL || 'http://:10.198.159.195:3000';
+  process.env.EXPO_PUBLIC_API_URL || 'https://ganahezabackend.onrender.com';
 
 const API_TIMEOUT =
   Number(process.env.EXPO_PUBLIC_API_TIMEOUT) || 15000;
