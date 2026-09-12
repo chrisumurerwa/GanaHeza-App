@@ -81,7 +81,7 @@ function ListCard({ item, onPress, onOrder, t }) {
 }
 
 // ─── Grid Card ────────────────────────────────────────────────────────────────
-function GridCard({ item, onPress, onOrder }) {
+function GridCard({ item, onPress, onOrder, t }) {
   const priceText = item.price
     ? `${item.price.toLocaleString()} ${item.currency}/${item.priceUnit}`
     : null;
@@ -138,6 +138,7 @@ function GridCard({ item, onPress, onOrder }) {
 export default function ProductsScreen() {
   const router = useRouter();
   const { products, loading, error, fetchProducts } = useProducts();
+  const { t } = useLanguage();
   const [query, setQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
   const [isGrid, setIsGrid] = useState(false);
@@ -228,8 +229,8 @@ export default function ProductsScreen() {
         columnWrapperStyle={isGrid ? styles.gridRow : undefined}
         renderItem={({ item }) =>
           isGrid
-            ? <GridCard item={item} onPress={() => goTo(item.id)} onOrder={() => goToOrder(item.id)} />
-            : <ListCard item={item} onPress={() => goTo(item.id)} onOrder={() => goToOrder(item.id)} />
+            ? <GridCard item={item} onPress={() => goTo(item.id)} onOrder={() => goToOrder(item.id)} t={t} />
+            : <ListCard item={item} onPress={() => goTo(item.id)} onOrder={() => goToOrder(item.id)} t={t} />
         }
         contentContainerStyle={isGrid ? styles.gridContent : styles.listPad}
         showsVerticalScrollIndicator={false}
