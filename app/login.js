@@ -245,7 +245,7 @@ export default function LoginScreen() {
               activeOpacity={0.7}
               onPress={openForgotModal}
             >
-              <Text style={styles.forgotText}>{t('login_forgot')}</Text>
+              {/* <Text style={styles.forgotText}>{t('login_forgot')}</Text> */}
             </TouchableOpacity>
 
             {/* Login Button */}
