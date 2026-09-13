@@ -239,14 +239,7 @@ export default function LoginScreen() {
               </View>
             </View>
 
-            {/* Forgot Password */}
-            <TouchableOpacity
-              style={styles.forgotWrap}
-              activeOpacity={0.7}
-              onPress={openForgotModal}
-            >
-              {/* <Text style={styles.forgotText}>{t('login_forgot')}</Text> */}
-            </TouchableOpacity>
+            {/* Forgot Password — hidden, password change is done from the dashboard */}
 
             {/* Login Button */}
             <TouchableOpacity
