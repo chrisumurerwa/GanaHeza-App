@@ -96,6 +96,10 @@ function BottomTabBar({ state, navigation }) {
     { name: 'about',    label: t('tab_about'),    icon: 'information-circle', iconOut: 'information-circle-outline' },
   ];
 
+  // Detect if the current route stack includes /contact so Chat shows as active
+  const currentPath = state.routes[state.index]?.name ?? '';
+  const isChatActive = currentPath === 'contact';
+
   // Show back button only when not on the first tab (Home)
   const canGoBack = state.index > 0;
 
@@ -149,16 +153,22 @@ function BottomTabBar({ state, navigation }) {
         );
       })}
 
-      {/* Quick contact action, positioned after About */}
+      {/* Chat tab — shows active when on /contact */}
       <TouchableOpacity
         style={styles.tabItem}
         onPress={() => router.push('/contact')}
         activeOpacity={0.75}
         accessibilityLabel="Chat with us"
-        accessibilityHint="Opens the contact page"
       >
-        <Ionicons name="chatbubble-ellipses-outline" size={22} color="#AAAAAA" />
-        <Text style={styles.tabLabel}>{t('tab_chat')}</Text>
+        {isChatActive && <View style={styles.activeBar} />}
+        <Ionicons
+          name={isChatActive ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline'}
+          size={22}
+          color={isChatActive ? Colors.primary : '#AAAAAA'}
+        />
+        <Text style={[styles.tabLabel, isChatActive && styles.tabLabelActive]}>
+          {t('tab_chat')}
+        </Text>
       </TouchableOpacity>
     </View>
   );
