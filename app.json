@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "GanaHeza",
+    "name": "GANA HEZA",
     "slug": "ganahezaapp",
-    "version": "1.0.3",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/Ganaheza LOGO.png",
     "scheme": "ganaheza",
@@ -18,7 +18,8 @@
       },
       "edgeToEdgeEnabled": false,
       "predictiveBackGestureEnabled": false,
-      "package": "com.ganaheza.app"
+      "package": "com.ganaheza.app",
+      "versionCode": 1
     },
     "web": {
       "output": "static",
