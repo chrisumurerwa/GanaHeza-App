@@ -19,7 +19,7 @@
       "edgeToEdgeEnabled": false,
       "predictiveBackGestureEnabled": false,
       "package": "com.ganaheza.app",
-      "versionCode": 20
+      "versionCode": 23
     },
     "web": {
       "output": "static",
