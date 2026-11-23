@@ -19,7 +19,10 @@
       "edgeToEdgeEnabled": false,
       "predictiveBackGestureEnabled": false,
       "package": "com.ganaheza.app",
-      "versionCode": 23
+      "versionCode": 24,
+      "permissions": [],
+      "manifestPlaceholders": {},
+      "intentFilters": []
     },
     "web": {
       "output": "static",
@@ -36,7 +39,15 @@
           "backgroundColor": "#FFFFFF"
         }
       ],
-      "expo-build-properties",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraProguardRules": ""
+          }
+        }
+      ],
+      "./plugins/withPortraitOptional",
       "@react-native-community/datetimepicker"
     ],
     "extra": {
