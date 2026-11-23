@@ -19,7 +19,7 @@
       "edgeToEdgeEnabled": false,
       "predictiveBackGestureEnabled": false,
       "package": "com.ganaheza.app",
-      "versionCode": 24,
+      "versionCode": 25,
       "permissions": [],
       "manifestPlaceholders": {},
       "intentFilters": []
